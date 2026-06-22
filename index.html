@@ -4,45 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>四辻理央 × 片岡利帆 顔合わせ会</title>
-
-  <!--
-  ================================================================
-    両家顔合わせ しおりサイト
-    制作: HTML/CSS/JS 1ファイル完結版
-    GitHub Pages / Vercel にそのまま配置可能
-  ================================================================
-  -->
-
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
-    /* ================================================================
-       CSS カスタムプロパティ（デザイントークン）
-       色・フォント・間隔の一元管理
-    ================================================================ */
     :root {
-      --bg-deep:       #080818;
-      --bg-mid:        #0d0d2b;
-      --bg-card:       rgba(255,255,255,0.055);
-      --gold:          #c9a96e;
-      --gold-light:    #e8d5a3;
-      --gold-dim:      rgba(201,169,110,0.25);
-      --star-blue:     #8ab4d4;
-      --text-main:     #f0ece4;
-      --text-sub:      #b0a898;
-      --glass-border:  rgba(201,169,110,0.22);
-      --radius:        20px;
-      --ease:          cubic-bezier(0.4,0,0.2,1);
+      --bg-deep:      #080818;
+      --bg-mid:       #0d0d2b;
+      --bg-card:      rgba(255,255,255,0.055);
+      --gold:         #c9a96e;
+      --gold-light:   #e8d5a3;
+      --gold-dim:     rgba(201,169,110,0.25);
+      --star-blue:    #8ab4d4;
+      --text-main:    #f0ece4;
+      --text-sub:     #b0a898;
+      --glass-border: rgba(201,169,110,0.22);
+      --radius:       20px;
+      --ease:         cubic-bezier(0.4,0,0.2,1);
       --font-d: 'Cormorant Garamond', serif;
       --font-b: 'Noto Serif JP', serif;
     }
 
-    /* ================================================================
-       リセット・ベーススタイル
-    ================================================================ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
@@ -57,9 +40,7 @@
     img { display: block; width: 100%; height: 100%; object-fit: cover; }
     button { cursor: pointer; }
 
-    /* ================================================================
-       星背景 Canvas（全ページ固定）
-    ================================================================ */
+    /* 星背景 Canvas */
     #starCanvas {
       position: fixed;
       inset: 0;
@@ -67,9 +48,7 @@
       pointer-events: none;
     }
 
-    /* ================================================================
-       ローディング画面
-    ================================================================ */
+    /* ローディング */
     #loading {
       position: fixed;
       inset: 0;
@@ -82,7 +61,6 @@
       transition: opacity 0.9s var(--ease), visibility 0.9s var(--ease);
     }
     #loading.hide { opacity: 0; visibility: hidden; }
-
     .ld-ring {
       width: 56px; height: 56px;
       border: 1.5px solid rgba(201,169,110,0.18);
@@ -91,7 +69,6 @@
       animation: spin 1.1s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     .ld-text {
       margin-top: 22px;
       font-family: var(--font-d);
@@ -101,9 +78,7 @@
       opacity: 0.6;
     }
 
-    /* ================================================================
-       固定ナビゲーション
-    ================================================================ */
+    /* 固定ナビゲーション */
     #nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -119,7 +94,6 @@
       transition: transform 0.4s var(--ease);
     }
     #nav.hidden { transform: translateY(-100%); }
-
     .nav-logo {
       font-family: var(--font-d);
       font-size: 1rem;
@@ -127,15 +101,12 @@
       color: var(--gold-light);
     }
     .nav-logo span { color: var(--gold); }
-
-    /* ハンバーガーボタン */
     #menuBtn {
       width: 42px; height: 42px;
       border: none; background: transparent;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 6px;
-      z-index: 302;
-      position: relative;
+      z-index: 302; position: relative;
     }
     .hb {
       width: 24px; height: 1.5px;
@@ -144,9 +115,7 @@
       transform-origin: center;
     }
 
-    /* ================================================================
-       ドロワーメニュー
-    ================================================================ */
+    /* ドロワーメニュー */
     #drawer {
       position: fixed;
       inset: 0;
@@ -164,8 +133,6 @@
       transition: opacity 0.4s var(--ease), visibility 0.4s var(--ease);
     }
     #drawer.open { opacity: 1; visibility: visible; }
-
-    /* ×閉じるボタン（右上固定） */
     #drawerClose {
       position: absolute;
       top: 18px; right: 20px;
@@ -179,7 +146,6 @@
       transition: background 0.3s, transform 0.3s;
     }
     #drawerClose:hover { background: rgba(201,169,110,0.15); transform: rotate(90deg); }
-
     .d-link {
       font-family: var(--font-d);
       font-size: 1.25rem;
@@ -193,19 +159,11 @@
     .d-link .di { font-size: 0.95rem; opacity: 0.55; }
     .d-link:hover { color: var(--gold); }
 
-    /* ================================================================
-       メインコンテンツ（ローディング後に表示）
-    ================================================================ */
-    #main {
-      position: relative;
-      z-index: 1;
-      display: none;
-    }
+    /* メインコンテンツ */
+    #main { position: relative; z-index: 1; display: none; }
     #main.show { display: block; }
 
-    /* ================================================================
-       セクション共通
-    ================================================================ */
+    /* セクション共通 */
     .sec {
       min-height: 100svh;
       padding: 96px 20px 64px;
@@ -215,8 +173,6 @@
       position: relative;
     }
     .inner { width: 100%; max-width: 680px; }
-
-    /* セクション見出し */
     .eyebrow {
       font-family: var(--font-d);
       font-size: 0.7rem;
@@ -236,9 +192,7 @@
     }
     .sec-title em { font-style: italic; color: var(--gold); }
 
-    /* ================================================================
-       ガラスカード共通
-    ================================================================ */
+    /* ガラスカード */
     .g-card {
       background: var(--bg-card);
       border: 1px solid var(--glass-border);
@@ -257,9 +211,7 @@
       background: linear-gradient(90deg, transparent, rgba(201,169,110,0.55), transparent);
     }
 
-    /* ================================================================
-       フェードアップアニメーション
-    ================================================================ */
+    /* フェードアップ */
     .fu {
       opacity: 0;
       transform: translateY(36px);
@@ -270,9 +222,7 @@
     .fu:nth-child(3) { transition-delay: 0.2s; }
     .fu:nth-child(4) { transition-delay: 0.3s; }
 
-    /* ================================================================
-       ① Hero（オープニング）
-    ================================================================ */
+    /* ① Hero */
     #hero {
       min-height: 100svh;
       display: flex; flex-direction: column;
@@ -281,15 +231,11 @@
       padding: 48px 24px;
       position: relative; z-index: 1;
     }
-
-    /* 輝く円形グロー */
     .hero-glow {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: radial-gradient(ellipse 70% 50% at 50% 60%, rgba(201,169,110,0.07) 0%, transparent 70%);
       pointer-events: none;
     }
-
     .hero-date {
       font-family: var(--font-d);
       font-size: 0.78rem;
@@ -319,8 +265,6 @@
       opacity: 0;
       animation: fid 1s ease 2.0s forwards;
     }
-
-    /* 開始ボタン */
     #startBtn {
       border: 1px solid var(--gold);
       background: transparent;
@@ -340,15 +284,11 @@
       content: '';
       position: absolute; inset: 0;
       background: var(--gold);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s var(--ease);
-      z-index: -1;
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.4s var(--ease); z-index: -1;
     }
     #startBtn:hover::before { transform: scaleX(1); }
     #startBtn:hover { color: var(--bg-deep); transform: translateY(-2px); }
-
-    /* スクロールインジケーター */
     .scroll-hint {
       position: absolute;
       bottom: 28px; left: 50%;
@@ -365,8 +305,7 @@
       width: 4px; height: 26px;
       border: 1px solid rgba(201,169,110,0.35);
       border-radius: 4px;
-      overflow: hidden;
-      position: relative;
+      overflow: hidden; position: relative;
     }
     .s-dot::after {
       content: '';
@@ -379,9 +318,7 @@
     @keyframes sd  { 0%{top:0}100%{top:100%} }
     @keyframes fid { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:translateY(0)} }
 
-    /* ================================================================
-       ② ご挨拶
-    ================================================================ */
+    /* ② ご挨拶 */
     #greeting .msg-box {
       border-left: 1.5px solid var(--gold);
       padding-left: 22px;
@@ -396,26 +333,17 @@
       letter-spacing: 0.14em;
     }
 
-    /* ================================================================
-       ③ プロフィール
-    ================================================================ */
+    /* ③ プロフィール */
     #profile .p-grid { display: grid; gap: 24px; }
     @media(min-width:600px){ #profile .p-grid { grid-template-columns: 1fr 1fr; } }
-
     .p-card { overflow: hidden; }
-
-    /* 写真エリア ★差し替え場所★ */
     .p-photo {
       height: 220px;
       background: linear-gradient(135deg,#141430 0%,#0a0f28 100%);
       display: flex; align-items: center; justify-content: center;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
-    /* 実際の写真に差し替える場合:
-       <img src="./img/rio.jpg" alt="四辻理央"> を .p-photo 内に追加 */
     .p-photo-ph { font-size: 4.5rem; opacity: 0.22; }
-
     .p-info { padding: 22px 20px; }
     .p-role {
       font-family: var(--font-d);
@@ -443,29 +371,7 @@
     .p-row { display: flex; gap: 10px; font-size: 0.86rem; }
     .p-lbl { min-width: 76px; font-size: 0.72rem; color: var(--gold); letter-spacing: 0.08em; padding-top: 2px; }
 
-    
-    /* ================================================================
-       ⑤ 仕事紹介
-    ================================================================ */
-    #work .w-card { margin-bottom: 24px; }
-    .w-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
-    .w-icon {
-      width: 50px; height: 50px;
-      border-radius: 14px;
-      background: linear-gradient(135deg,rgba(201,169,110,0.18),rgba(138,180,212,0.12));
-      border: 1px solid var(--glass-border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; flex-shrink: 0;
-    }
-    .w-who { font-family: var(--font-d); font-size: 1.2rem; color: var(--gold-light); }
-    .w-role { font-size: 0.7rem; letter-spacing: 0.2em; color: var(--gold); }
-    .w-rows { display: flex; flex-direction: column; gap: 13px; }
-    .w-row { display: flex; gap: 10px; font-size: 0.86rem; }
-    .w-lbl { min-width: 72px; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.08em; padding-top: 2px; }
-
-    /* ================================================================
-       ④ 好きなところ
-    ================================================================ */
+    /* ④ 好きなところ */
     #love .love-blk { margin-bottom: 36px; }
     .love-from {
       font-family: var(--font-d);
@@ -485,21 +391,31 @@
       backdrop-filter: blur(10px);
     }
     .ln { font-family: var(--font-d); font-size: 1.05rem; color: var(--gold); min-width: 22px; line-height: 1.4; }
-
     .div-line {
       width: 44px; height: 1px;
       background: var(--gold); opacity: 0.5;
       margin: 28px auto;
     }
 
-
-    /* ================================================================
-       ⑥ タイムライン
-    ================================================================ */
-    #timeline .tl-wrap {
-      position: relative;
-      padding-left: 22px;
+    /* ⑤ 仕事紹介 */
+    #work .w-card { margin-bottom: 24px; }
+    .w-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .w-icon {
+      width: 50px; height: 50px;
+      border-radius: 14px;
+      background: linear-gradient(135deg,rgba(201,169,110,0.18),rgba(138,180,212,0.12));
+      border: 1px solid var(--glass-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; flex-shrink: 0;
     }
+    .w-who { font-family: var(--font-d); font-size: 1.2rem; color: var(--gold-light); }
+    .w-role { font-size: 0.7rem; letter-spacing: 0.2em; color: var(--gold); }
+    .w-rows { display: flex; flex-direction: column; gap: 13px; }
+    .w-row { display: flex; gap: 10px; font-size: 0.86rem; }
+    .w-lbl { min-width: 72px; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.08em; padding-top: 2px; }
+
+    /* ⑥ タイムライン */
+    #timeline .tl-wrap { position: relative; padding-left: 22px; }
     .tl-wrap::before {
       content: '';
       position: absolute;
@@ -526,14 +442,9 @@
     .tl-ev { font-family: var(--font-d); font-size: 1.1rem; color: var(--gold-light); margin-bottom: 5px; }
     .tl-desc { font-size: 0.84rem; color: var(--text-sub); line-height: 1.85; }
 
-    /* ================================================================
-       ⑦ 思い出ギャラリー（横スライダー）
-    ================================================================ */
+    /* ⑦ スライダー */
     #memories .sl-wrap { width: 100%; overflow: hidden; border-radius: var(--radius); }
     .sl-track { display: flex; transition: transform 0.5s var(--ease); }
-
-    /* ★ 写真差し替え場所 ★
-       .sl-item 内に <img src="./img/memory1.jpg" alt="旅行"> を追加 */
     .sl-item {
       min-width: 100%;
       aspect-ratio: 4/3;
@@ -551,7 +462,6 @@
       font-size: 0.84rem;
       letter-spacing: 0.14em;
     }
-
     .sl-ctrl { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 18px; }
     .sl-btn {
       width: 40px; height: 40px;
@@ -574,9 +484,7 @@
     }
     .sl-dot.on { background: var(--gold); transform: scale(1.45); }
 
-    /* ================================================================
-       ⑧ クイズ
-    ================================================================ */
+    /* ⑧ クイズ */
     #quiz .qz-card { margin-bottom: 20px; }
     .qz-q { font-size: 0.93rem; margin-bottom: 14px; line-height: 1.75; }
     .qz-q .qn { font-family: var(--font-d); font-size: 1.08rem; color: var(--gold); margin-right: 6px; }
@@ -605,277 +513,13 @@
       border-radius: 10px; line-height: 1.85;
     }
     .qz-ans.show { display: block; }
-
-    /* スコア */
-    #quizScore {
-      text-align: center;
-      padding: 28px;
-      display: none;
-    }
+    #quizScore { text-align: center; padding: 28px; display: none; }
     #quizScore.show { display: block; }
-    .score-num {
-      font-family: var(--font-d);
-      font-size: 3.5rem;
-      color: var(--gold);
-      line-height: 1;
-      margin-bottom: 10px;
-    }
+    .score-num { font-family: var(--font-d); font-size: 3.5rem; color: var(--gold); line-height: 1; margin-bottom: 10px; }
     .score-msg { font-size: 0.92rem; color: var(--text-sub); }
 
     /* ================================================================
-       ⑨ ミニゲーム（しおりページ）
-    ================================================================ */
-    #minigame { text-align: center; }
-    #gameBtn {
-      display: inline-flex;
-      align-items: center; gap: 10px;
-      border: 1px solid var(--gold);
-      background: transparent;
-      color: var(--gold-light);
-      font-family: var(--font-d);
-      font-size: 1.05rem;
-      letter-spacing: 0.22em;
-      padding: 18px 48px;
-      border-radius: 60px;
-      position: relative; overflow: hidden;
-      transition: color 0.4s, transform 0.3s;
-      margin-top: 16px;
-    }
-    #gameBtn::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: var(--gold);
-      transform: scaleX(0); transform-origin: left;
-      transition: transform 0.4s var(--ease); z-index: -1;
-    }
-    #gameBtn:hover::before { transform: scaleX(1); }
-    #gameBtn:hover { color: var(--bg-deep); transform: translateY(-2px); }
-
-    /* ================================================================
-       ミニゲーム画面（フルスクリーンオーバーレイ）
-    ================================================================ */
-    #gameScreen {
-      position: fixed;
-      inset: 0;
-      z-index: 500;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      overflow: hidden;
-    }
-    #gameScreen.open { display: flex; }
-
-    /* 火山背景 */
-    #gameCanvas {
-      position: absolute;
-      inset: 0;
-      width: 100%; height: 100%;
-    }
-
-    /* ゲームUI（Canvas上に重ねる） */
-    .game-ui {
-      position: relative;
-      z-index: 10;
-      width: 100%; max-width: 480px;
-      display: flex; flex-direction: column;
-      align-items: center;
-      padding: 20px 16px 0;
-    }
-
-    .game-title {
-      font-family: var(--font-d);
-      font-size: clamp(1rem, 4.5vw, 1.4rem);
-      letter-spacing: 0.12em;
-      color: #ffd700;
-      text-shadow: 0 0 20px rgba(255,140,0,0.9), 0 2px 4px rgba(0,0,0,0.8);
-      margin-bottom: 16px;
-      text-align: center;
-    }
-
-    /* HPバー */
-    .hp-wrap {
-      width: 100%;
-      background: rgba(0,0,0,0.55);
-      border: 1px solid rgba(255,100,0,0.5);
-      border-radius: 8px;
-      overflow: hidden;
-      height: 22px;
-      margin-bottom: 6px;
-      position: relative;
-    }
-    #hpBar {
-      height: 100%;
-      background: linear-gradient(90deg, #ff2200, #ff6600, #ffaa00);
-      transition: width 0.5s var(--ease);
-    }
-    .hp-label {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.72rem; letter-spacing: 0.1em;
-      color: #fff; text-shadow: 0 1px 3px #000;
-      font-family: var(--font-d);
-    }
-    .hp-txt { font-size: 0.72rem; color: #ffc080; margin-bottom: 14px; letter-spacing: 0.12em; }
-
-    /* キャラクターゾーン */
-    .char-zone {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 18px;
-      padding: 0 8px;
-      min-height: 140px;
-      position: relative;
-    }
-
-    /* ドラゴン */
-    .dragon-wrap { position: relative; flex: 1; display: flex; justify-content: center; }
-    #dragonEl {
-      font-size: clamp(4rem, 18vw, 6rem);
-      line-height: 1;
-      filter: drop-shadow(0 0 18px rgba(255,80,0,0.8));
-      transition: transform 0.15s;
-      display: block;
-      text-align: center;
-    }
-    #dragonEl.hit { animation: dragonHit 0.35s ease; }
-    @keyframes dragonHit {
-      0%  { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 30px rgba(255,255,0,1)); }
-      30% { transform: scale(1.18) rotate(-5deg); }
-      60% { transform: scale(0.9) rotate(4deg); }
-      100%{ transform: scale(1) rotate(0deg); }
-    }
-
-    /* 勝利エフェクト */
-    #winEffect {
-      position: absolute; inset: -20px;
-      pointer-events: none; display: none;
-    }
-    #winEffect.show { display: block; }
-
-    /* 味方 */
-    .ally-wrap {
-      display: flex; flex-direction: column;
-      align-items: center; gap: 4px;
-    }
-    .ally-char { font-size: clamp(2.2rem, 9vw, 3rem); line-height: 1; filter: drop-shadow(0 0 8px rgba(150,200,255,0.7)); }
-    .ally-name { font-size: 0.65rem; letter-spacing: 0.1em; color: #a0d4ff; text-shadow: 0 1px 3px #000; font-family: var(--font-d); }
-
-    /* 攻撃エフェクト */
-    .atk-fx {
-      position: absolute;
-      font-size: 1.8rem;
-      pointer-events: none;
-      opacity: 0;
-      top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-    }
-    .atk-fx.fire { animation: atkFire 0.6s ease forwards; }
-    @keyframes atkFire {
-      0%  { opacity:1; transform: translate(-50%,-80%) scale(0.5); }
-      50% { opacity:1; transform: translate(-50%,-120%) scale(1.5); }
-      100%{ opacity:0; transform: translate(-50%,-160%) scale(1); }
-    }
-
-    /* バトルログ */
-    #battleLog {
-      width: 100%;
-      background: rgba(0,0,0,0.6);
-      border: 1px solid rgba(255,120,0,0.3);
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 0.82rem;
-      color: #ffcc88;
-      letter-spacing: 0.06em;
-      min-height: 44px;
-      margin-bottom: 16px;
-      text-shadow: 0 1px 2px #000;
-      text-align: center;
-      font-family: var(--font-d);
-    }
-
-    /* 攻撃ボタン */
-    #atkBtn {
-      border: 2px solid #ff8800;
-      background: linear-gradient(135deg, rgba(180,60,0,0.7), rgba(100,20,0,0.8));
-      color: #ffddaa;
-      font-family: var(--font-d);
-      font-size: 1rem;
-      letter-spacing: 0.18em;
-      padding: 15px 44px;
-      border-radius: 50px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 0 18px rgba(255,100,0,0.4);
-      backdrop-filter: blur(6px);
-      margin-bottom: 16px;
-    }
-    #atkBtn:hover:not([disabled]) { transform: translateY(-2px) scale(1.04); box-shadow: 0 0 28px rgba(255,150,0,0.65); }
-    #atkBtn[disabled] { opacity: 0.4; }
-
-    /* 戻るボタン */
-    #backBtn {
-      border: 1px solid rgba(255,200,100,0.4);
-      background: rgba(0,0,0,0.5);
-      color: #ffcc88;
-      font-family: var(--font-d);
-      font-size: 0.85rem;
-      letter-spacing: 0.18em;
-      padding: 11px 32px;
-      border-radius: 50px;
-      transition: background 0.3s;
-      margin-bottom: 8px;
-    }
-    #backBtn:hover { background: rgba(255,150,0,0.2); }
-
-    /* 勝利画面 */
-    #winScreen {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
-    }
-    #winScreen.show { display: flex; }
-    .win-title {
-      font-family: var(--font-d);
-      font-size: clamp(2rem, 9vw, 3rem);
-      color: #ffd700;
-      text-shadow: 0 0 30px rgba(255,200,0,0.9);
-      letter-spacing: 0.1em;
-      margin-bottom: 12px;
-      animation: winPulse 1.2s ease infinite alternate;
-    }
-    @keyframes winPulse { from{text-shadow:0 0 20px #ffd700} to{text-shadow:0 0 50px #ff8800, 0 0 80px #ffaa00} }
-    .win-sub { font-size: 0.88rem; color: #ffcc88; letter-spacing: 0.15em; margin-bottom: 28px; }
-    #returnBtn {
-      border: 2px solid #ffd700;
-      background: rgba(180,120,0,0.25);
-      color: #ffd700;
-      font-family: var(--font-d);
-      font-size: 1rem;
-      letter-spacing: 0.22em;
-      padding: 15px 40px;
-      border-radius: 50px;
-      transition: background 0.3s, transform 0.3s;
-    }
-    #returnBtn:hover { background: rgba(255,180,0,0.3); transform: scale(1.04); }
-
-    /* 花火パーティクル */
-    .firework {
-      position: fixed;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      pointer-events: none;
-      animation: fw 1.1s ease forwards;
-    }
-    @keyframes fw {
-      0%   { opacity:1; transform: translate(0,0) scale(1); }
-      100% { opacity:0; transform: var(--tx) scale(0.1); }
-    }
-
-    /* ================================================================
-       ⑩ エンディング
+       エンディング
     ================================================================ */
     #ending {
       min-height: 100svh;
@@ -884,8 +528,14 @@
       align-items: center; justify-content: center;
       padding: 60px 24px;
       position: relative; z-index: 1;
+      overflow: hidden;
     }
-    .end-star { font-size: 2rem; letter-spacing: 0.3em; margin-bottom: 32px; opacity: 0.7; }
+    .end-star {
+      font-size: 2rem;
+      letter-spacing: 0.3em;
+      margin-bottom: 32px;
+      opacity: 0.7;
+    }
     .end-title {
       font-family: var(--font-d);
       font-size: clamp(1.3rem, 5vw, 2rem);
@@ -902,11 +552,111 @@
       letter-spacing: 0.22em;
       margin-bottom: 36px;
     }
-    .end-date { font-family: var(--font-d); font-size: 0.85rem; letter-spacing: 0.35em; color: var(--text-sub); }
+    .end-date {
+      font-family: var(--font-d);
+      font-size: 0.85rem;
+      letter-spacing: 0.35em;
+      color: var(--text-sub);
+      margin-bottom: 48px;
+    }
 
-    /* ================================================================
-       スクロールトップボタン
-    ================================================================ */
+    /* ハートボタン */
+    #heartBtn {
+      border: 1px solid rgba(255,150,180,0.5);
+      background: rgba(255,100,140,0.08);
+      color: #ffb8cc;
+      font-family: var(--font-d);
+      font-size: 1rem;
+      letter-spacing: 0.22em;
+      padding: 16px 44px;
+      border-radius: 60px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s, transform 0.3s, box-shadow 0.4s;
+    }
+    #heartBtn:hover {
+      background: rgba(255,100,140,0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(255,120,160,0.3);
+    }
+    #heartBtn:active { transform: scale(0.96); }
+
+    /* ハートパーティクル */
+    .heart-particle {
+      position: fixed;
+      pointer-events: none;
+      font-size: 1.6rem;
+      z-index: 999;
+      animation: heartFly var(--dur) var(--ease) forwards;
+      will-change: transform, opacity;
+    }
+    @keyframes heartFly {
+      0%   { opacity: 1; transform: translate(0, 0) scale(0.5) rotate(var(--rot0)); }
+      60%  { opacity: 1; }
+      100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(var(--sc)) rotate(var(--rot1)); }
+    }
+
+    /* 「今日はありがとう！」テキスト演出 */
+    #thankMsg {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.6);
+      z-index: 1000;
+      pointer-events: none;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.4s, transform 0.5s var(--ease);
+    }
+    #thankMsg.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    #thankMsg.hide {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1.2);
+    }
+    .thank-inner {
+      background: rgba(8,8,24,0.85);
+      border: 1px solid rgba(255,150,180,0.4);
+      border-radius: 24px;
+      padding: 32px 40px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      position: relative;
+    }
+    .thank-inner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,150,180,0.6), transparent);
+    }
+    .thank-hearts-row {
+      font-size: 1.8rem;
+      letter-spacing: 0.2em;
+      margin-bottom: 16px;
+      animation: thankHeartsAnim 1s ease infinite alternate;
+    }
+    @keyframes thankHeartsAnim {
+      from { transform: scale(1); }
+      to   { transform: scale(1.1); }
+    }
+    .thank-text {
+      font-family: var(--font-d);
+      font-size: clamp(1.4rem, 6vw, 2rem);
+      color: #ffb8cc;
+      letter-spacing: 0.12em;
+      line-height: 1.5;
+      text-shadow: 0 0 20px rgba(255,120,160,0.6);
+    }
+    .thank-sub {
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      color: rgba(255,180,200,0.7);
+      margin-top: 10px;
+    }
+
+    /* スクロールトップボタン */
     #toTop {
       position: fixed;
       bottom: 26px; right: 18px;
@@ -925,9 +675,6 @@
     }
     #toTop.show { opacity: 1; visibility: visible; transform: translateY(0); }
 
-    /* ================================================================
-       アクセシビリティ：動き軽減
-    ================================================================ */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -938,22 +685,15 @@
 </head>
 <body>
 
-<!-- ================================================================
-     星パーティクル Canvas（背景）
-================================================================ -->
 <canvas id="starCanvas"></canvas>
 
-<!-- ================================================================
-     ローディング画面
-================================================================ -->
+<!-- ローディング -->
 <div id="loading">
   <div class="ld-ring"></div>
   <p class="ld-text">Now Loading ...</p>
 </div>
 
-<!-- ================================================================
-     固定ナビゲーション
-================================================================ -->
+<!-- ナビゲーション -->
 <nav id="nav">
   <div class="nav-logo">理央 <span>×</span> 利帆</div>
   <button id="menuBtn" aria-label="メニューを開く">
@@ -963,13 +703,9 @@
   </button>
 </nav>
 
-<!-- ================================================================
-     ドロワーメニュー（×ボタンで確実に閉じる）
-================================================================ -->
+<!-- ドロワーメニュー -->
 <div id="drawer" role="dialog" aria-modal="true" aria-label="ナビゲーションメニュー">
-  <!-- ×ボタン（右上固定） -->
   <button id="drawerClose" aria-label="メニューを閉じる">✕</button>
-
   <a class="d-link" href="#greeting">  <span class="di">✉</span>  ご挨拶</a>
   <a class="d-link" href="#profile">   <span class="di">👤</span> プロフィール</a>
   <a class="d-link" href="#love">      <span class="di">✦</span>  好きなところ</a>
@@ -977,50 +713,40 @@
   <a class="d-link" href="#timeline">  <span class="di">📅</span> 二人の歩み</a>
   <a class="d-link" href="#memories">  <span class="di">📸</span> 思い出</a>
   <a class="d-link" href="#quiz">      <span class="di">🎯</span> クイズ</a>
-  <a class="d-link" href="#minigame">  <span class="di">⚔️</span>  ミニゲーム</a>
   <a class="d-link" href="#ending">    <span class="di">🌙</span> エンディング</a>
 </div>
 
-<!-- ================================================================
-     メインコンテンツ（ローディング後に表示）
-================================================================ -->
+<!-- メインコンテンツ -->
 <div id="main">
 
-  <!-- ① オープニング ============================================= -->
+  <!-- ① オープニング -->
   <section id="hero">
     <div class="hero-glow"></div>
-
-    <p class="hero-date">2024 . XX . XX</p>
-
+    <p class="hero-date">2026 . 07 . 19</p>
     <h1 class="hero-names">
       四辻理央<span class="x">×</span>片岡利帆
     </h1>
-
-    <p class="hero-sub">顔合わせ会へようこそ</p>
-
+    <p class="hero-sub">顔合わせ会ページへようこそ！</p>
     <button id="startBtn">はじめる</button>
-
     <div class="scroll-hint">
       <div class="s-dot"></div>
       SCROLL
     </div>
   </section>
 
-  <!-- ② ご挨拶 ================================================== -->
+  <!-- ② ご挨拶 -->
   <section id="greeting" class="sec">
     <div class="inner">
       <p class="eyebrow">Message</p>
-      <h2 class="sec-title">ご<em>挨拶</em></h2>
-
+      <h2 class="sec-title">はじめに</h2>
       <div class="g-card fu">
         <div class="msg-box">
           <p>
-            本日はお忙しい中、お集まりいただきまして誠にありがとうございます。<br /><br />
-            こうして両家の皆様にお顔を合わせていただく場を設けることができ、
-            ふたりとも心からうれしく思っております。<br /><br />
-            まだまだ未熟なふたりですが、お互いを大切にしながら、
-            笑顔の絶えない温かい家庭を築いていきたいと思っています。<br /><br />
-            どうぞ今後とも、変わらぬご支援をよろしくお願いいたします。
+            本日はお集まりいただきありがとうございます。<br /><br />
+            この会を楽しんでもらうためにサイト作っちゃいました。（理央作）<br /><br />
+            二人のプロフィールやクイズも載せているので、楽しんでもらえたら嬉しいです！<br /><br />
+            絶対にないと思いますが、話題が尽きて無言が続く気まずい時間が訪れたらこのサイトを話題にしてください笑<br /><br />
+            どうぞ本日はよろしくお願いいたします！！
           </p>
         </div>
         <p class="sig">理央 ＆ 利帆</p>
@@ -1028,21 +754,17 @@
     </div>
   </section>
 
-  <!-- ③ プロフィール ============================================= -->
+  <!-- ③ プロフィール -->
   <section id="profile" class="sec">
     <div class="inner">
       <p class="eyebrow">Profile</p>
       <h2 class="sec-title">ふたりの<em>プロフィール</em></h2>
-
       <div class="p-grid">
 
-        <!-- 新郎カード
-             ★ 写真差し替え方法:
-               .p-photo 内の .p-photo-ph を削除し、
-               <img src="./img/rio.jpg" alt="四辻理央"> を追加してください -->
+        <!-- 新郎カード ★写真: .p-photo内に <img src="./img/rio.jpg" alt="四辻理央"> を追加 -->
         <div class="g-card p-card fu">
           <div class="p-photo">
-            <div class="p-photo-ph">🤵</div>
+            <img src="./img/rio.jpg" alt="四辻理央">
           </div>
           <div class="p-info">
             <p class="p-role">Groom / 新郎</p>
@@ -1051,20 +773,17 @@
               <small>よつじ りお</small>
             </h3>
             <div class="p-rows">
-              <div class="p-row"><span class="p-lbl">年齢</span><span>○○歳</span></div>
-              <div class="p-row"><span class="p-lbl">出身</span><span>○○県出身</span></div>
-              <div class="p-row"><span class="p-lbl">趣味</span><span>○○・○○・○○</span></div>
-              <div class="p-row"><span class="p-lbl">好きな食べ物</span><span>○○・○○</span></div>
-              <div class="p-row"><span class="p-lbl">性格</span><span>○○で○○なところがあります</span></div>
-              <div class="p-row"><span class="p-lbl">休日の過ごし方</span><span>○○や○○をして過ごします</span></div>
+              <div class="p-row"><span class="p-lbl">年齢</span><span>27歳</span></div>
+              <div class="p-row"><span class="p-lbl">趣味</span><span>サッカー・アニメ・サウナ</span></div>
+              <div class="p-row"><span class="p-lbl">好きな食べ物</span><span>カレー・納豆・チョコ</span></div>
+              <div class="p-row"><span class="p-lbl">性格（自己評価）</span><span>人類で最も楽観的人間</span></div>
+              <div class="p-row"><span class="p-lbl">性格（🐙評価）</span><span>優しい！、メンタルの強さを極めている、家族想い、素直</span></div>
+              <div class="p-row"><span class="p-lbl">休日の過ごし方</span><span>ゲーム・美味しいご飯・旅行等、様々！</span></div>
             </div>
           </div>
         </div>
 
-        <!-- 新婦カード
-             ★ 写真差し替え方法:
-               .p-photo 内の .p-photo-ph を削除し、
-               <img src="./img/riho.jpg" alt="片岡利帆"> を追加してください -->
+        <!-- 新婦カード ★写真: .p-photo内に <img src="./img/riho.jpg" alt="片岡利帆"> を追加 -->
         <div class="g-card p-card fu">
           <div class="p-photo">
             <div class="p-photo-ph">👰</div>
@@ -1076,12 +795,12 @@
               <small>かたおか りほ</small>
             </h3>
             <div class="p-rows">
-              <div class="p-row"><span class="p-lbl">年齢</span><span>○○歳</span></div>
-              <div class="p-row"><span class="p-lbl">出身</span><span>○○県出身</span></div>
-              <div class="p-row"><span class="p-lbl">趣味</span><span>○○・○○・○○</span></div>
-              <div class="p-row"><span class="p-lbl">好きな食べ物</span><span>○○・○○</span></div>
-              <div class="p-row"><span class="p-lbl">性格</span><span>○○で○○なところがあります</span></div>
-              <div class="p-row"><span class="p-lbl">休日の過ごし方</span><span>○○や○○をして過ごします</span></div>
+              <div class="p-row"><span class="p-lbl">年齢</span><span>27歳</span></div>
+              <div class="p-row"><span class="p-lbl">趣味</span><span>ゲーム・歌うこと・旅行の計画を立てること</span></div>
+              <div class="p-row"><span class="p-lbl">好きな食べ物</span><span>おくら・トマト・赤身肉・チョコチップクッキー・チョコレート</span></div>
+              <div class="p-row"><span class="p-lbl">性格（自己評価）</span><span>せっかち・真面目・タスクを処理するのが好き（夏休みの宿題は真っ先に終わらせるタイプ）</span></div>
+              <div class="p-row"><span class="p-lbl">性格（🐙評価）</span><span>真面目で不真面目・人想いの気にしいさん・最後まで物を見てなくて落とすことが多い。</span></div>
+              <div class="p-row"><span class="p-lbl">休日の過ごし方</span><span>ゲーム・バラエティ番組を閲覧・街散歩</span></div>
             </div>
           </div>
         </div>
@@ -1090,47 +809,12 @@
     </div>
   </section>
 
-  <!-- ④ 好きなところ ============================================= -->
-  <section id="love" class="sec">
-    <div class="inner">
-      <p class="eyebrow">What I Love</p>
-      <h2 class="sec-title">お互いの<em>好きなところ</em></h2>
-
-      <!-- 理央→利帆 -->
-      <div class="love-blk fu">
-        <p class="love-from">理央から見た利帆</p>
-        <ul class="love-list">
-          <li><span class="ln">1</span>どんなときも笑顔で明るくいてくれるところ</li>
-          <li><span class="ln">2</span>相手の気持ちを自然に汲み取れる、やさしさ</li>
-          <li><span class="ln">3</span>自分の意見をしっかり持っていて、芯が強いところ</li>
-          <li><span class="ln">4</span>一緒にいると不思議と安心できる、その存在感</li>
-          <li><span class="ln">5</span>何事にも一生懸命で、その姿がいつも輝いて見えること</li>
-        </ul>
-      </div>
-
-      <div class="div-line"></div>
-
-      <!-- 利帆→理央 -->
-      <div class="love-blk fu">
-        <p class="love-from">利帆から見た理央</p>
-        <ul class="love-list">
-          <li><span class="ln">1</span>穏やかで、いつも私のペースに合わせてくれるやさしさ</li>
-          <li><span class="ln">2</span>困ったときに的確に頼りになる、頼もしさ</li>
-          <li><span class="ln">3</span>仕事に誇りを持って向き合っている、真剣な姿</li>
-          <li><span class="ln">4</span>小さなことにも気づいて、さりげなく気遣ってくれるところ</li>
-          <li><span class="ln">5</span>一緒にいると自然と笑顔になれる、その温かさ</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ⑤ 仕事紹介 ================================================= -->
+  <!-- ⑤ 仕事紹介 -->
   <section id="work" class="sec">
     <div class="inner">
       <p class="eyebrow">Our Work</p>
       <h2 class="sec-title">ふたりの<em>お仕事</em></h2>
 
-      <!-- 理央の仕事 -->
       <div class="g-card w-card fu">
         <div class="w-head">
           <div class="w-icon">💻</div>
@@ -1142,22 +826,15 @@
         <div class="w-rows">
           <div class="w-row">
             <span class="w-lbl">仕事内容</span>
-            <span>
-              ○○の分野で、○○のような仕事をしています。
-              チームで協力しながら、○○を通じて多くの方の役に立てるよう日々取り組んでいます。
-            </span>
+            <span>PwCコンサルティング合同会社で、人事領域✖︎IT系のコンサルタントという名前だけ聞くと一見怪しい仕事をしています。今までは、人事システムの導入支援を行ったり、PMOとして現場をまとめていたりしていました。今は、タレントマネジメントシステムの導入支援をしています。（人材スキルの可視化等）</span>
           </div>
           <div class="w-row">
             <span class="w-lbl">想い</span>
-            <span>
-              「○○したい」という想いで働いています。
-              将来は○○という夢も持っています。
-            </span>
+            <span>「どんな仕事も楽しむ」をモットーに日々の業務に励んでいます。将来こうなりたいとかはまだないですが、自分が楽しむことで周りも自然と楽しめる職場が作れたらなと思っています。</span>
           </div>
         </div>
       </div>
 
-      <!-- 利帆の仕事 -->
       <div class="g-card w-card fu">
         <div class="w-head">
           <div class="w-icon">🌿</div>
@@ -1169,83 +846,101 @@
         <div class="w-rows">
           <div class="w-row">
             <span class="w-lbl">仕事内容</span>
-            <span>
-              ○○の分野で、○○のような仕事をしています。
-              お客様と直接関わりながら、○○を大切に働いています。
-            </span>
+            <span>Googleで広告営業。検索結果の広告・youtube広告・Google Mapsの広告への出稿金額をもっと上げて欲しいと広告主に提案しています。今後は製品側（Youtube・Gemini・Pixelなど）に携われる部署に移動したいなと今は思ってます！以前は、理央くんの会社の協業相手であるSAPというシステムの開発・販売会社で営業をしていました。</span>
           </div>
           <div class="w-row">
             <span class="w-lbl">想い</span>
-            <span>
-              「○○したい」という想いを胸に、毎日仕事と向き合っています。
-              この仕事を通じて○○できることが一番のやりがいです。
-            </span>
+            <span>会社愛が会社Top3に入るくらい強い自信があります。また、Googleは朝から晩までブッフェのレストランが無料なのですが、外部開放されているため、東京に来る際はぜひいらしてください。</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ⑥ タイムライン ============================================= -->
+  <!-- ④ 好きなところ -->
+  <section id="love" class="sec">
+    <div class="inner">
+      <p class="eyebrow">What I Love</p>
+      <h2 class="sec-title">お互いの<em>好きなところ</em></h2>
+
+      <div class="love-blk fu">
+        <p class="love-from">理央から見た利帆</p>
+        <ul class="love-list">
+          <li><span class="ln">1</span>いつも優しく、絶対に否定しないところ</li>
+          <li><span class="ln">2</span>旅行など二人の時間の計画をたくさん立ててくれるところ</li>
+          <li><span class="ln">3</span>愛情表現豊富なところ</li>
+          <li><span class="ln">4</span>自分のことを想って行動してくれるところ</li>
+          <li><span class="ln">5</span>お仕事頑張っているところ（尊敬）</li>
+        </ul>
+      </div>
+
+      <div class="div-line"></div>
+
+      <div class="love-blk fu">
+        <p class="love-from">利帆から見た理央</p>
+        <ul class="love-list">
+          <li><span class="ln">1</span>根がポジティブ：一緒にいてずっと明るくいられる</li>
+          <li><span class="ln">2</span>自己犠牲精神：自分よりも先に私・家族の幸せを優先した行動をしてくれる。自分が苦労しても周りがhappyだったらいいと本気で思って行動してるのが尊敬。</li>
+          <li><span class="ln">3</span>素直でまっすぐ：捻くれてない、戦隊モノの主人公みたい</li>
+          <li><span class="ln">4</span>しっかりしている：私のボケてる部分をカバーしてくれる</li>
+          <li><span class="ln">5</span>自己肯定感が高い：周りの人に干渉しすぎない、期待しない、悪く言わない自立した性格の背景にこれがあると思っています💫</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑥ タイムライン -->
   <section id="timeline" class="sec">
     <div class="inner">
       <p class="eyebrow">Our Story</p>
       <h2 class="sec-title">ふたりの<em>歩み</em></h2>
 
       <div class="tl-wrap fu">
-
         <div class="tl-item">
           <div class="tl-dot"></div>
-          <p class="tl-date">202○年 ○月</p>
+          <p class="tl-date">2024年 6月</p>
           <p class="tl-ev">出会い ✦</p>
-          <p class="tl-desc">○○の場で初めて出会いました。はじめて話したとき、○○だと感じたことを今でも覚えています。</p>
+          <p class="tl-desc">理央の会社の同期と3人でご飯に行ったのが初めてです。階段下のよくわからない外の席に座った覚えがあるのと、利帆が瓜類が嫌いと言って、色々残していたのも覚えています。</p>
         </div>
-
         <div class="tl-item">
           <div class="tl-dot"></div>
-          <p class="tl-date">202○年 ○月</p>
+          <p class="tl-date">2024年 7月</p>
           <p class="tl-ev">初デート</p>
-          <p class="tl-desc">○○へ一緒に出かけました。緊張しながらも笑顔が絶えない一日でした。</p>
+          <p class="tl-desc">利帆が美味しいご飯が好きなので、理央があまり行かない中目黒でご飯を食べました。（理央仕事で遅刻）</p>
         </div>
-
         <div class="tl-item">
           <div class="tl-dot"></div>
-          <p class="tl-date">202○年 ○月</p>
+          <p class="tl-date">2025年 3月</p>
           <p class="tl-ev">交際スタート</p>
-          <p class="tl-desc">○○の場所で気持ちを伝えました。「一緒にいたい」という素直な想いをようやく伝えることができた日。</p>
+          <p class="tl-desc">理央から告白し交際スタート。利帆は告白された日のことが記憶にないという...</p>
         </div>
-
         <div class="tl-item">
           <div class="tl-dot"></div>
-          <p class="tl-date">202○年 ○月</p>
+          <p class="tl-date">2025年 3月</p>
           <p class="tl-ev">ふたりで旅行 ✈️</p>
-          <p class="tl-desc">○○へ初めてふたりで旅行しました。○○が特に印象に残っています。</p>
+          <p class="tl-desc">付き合った月に箱根旅行へ！ひたすら美味しいご飯と美味しいお酒を。</p>
         </div>
-
         <div class="tl-item">
           <div class="tl-dot"></div>
-          <p class="tl-date">202○年 ○月</p>
+          <p class="tl-date">2026年 4月</p>
           <p class="tl-ev">プロポーズ 💍</p>
-          <p class="tl-desc">○○で、大切な言葉を伝えました。「はい」という返事が、人生で一番うれしい瞬間でした。</p>
+          <p class="tl-desc">ハワイの海辺でプロポーズ。プロポーズ直前に理央はクレカを紛失。</p>
         </div>
-
         <div class="tl-item">
           <div class="tl-dot"></div>
-          <p class="tl-date">202○年 ○月</p>
+          <p class="tl-date">2026年 7月</p>
           <p class="tl-ev">婚約・顔合わせ 🌸</p>
           <p class="tl-desc">両家にご報告し、本日の顔合わせを迎えることができました。これからどうぞよろしくお願いいたします。</p>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ⑦ 思い出ギャラリー ========================================= -->
+  <!-- ⑦ 思い出ギャラリー -->
   <section id="memories" class="sec">
     <div class="inner">
       <p class="eyebrow">Memories</p>
       <h2 class="sec-title">ふたりの<em>思い出</em></h2>
-
       <!--
         ★ 写真差し替え方法:
           各 .sl-item 内に <img src="./img/memory1.jpg" alt="説明"> を追加し、
@@ -1253,40 +948,33 @@
       -->
       <div class="sl-wrap" id="memSlider">
         <div class="sl-track" id="memTrack">
-
           <div class="sl-item">
             <!-- <img src="./img/memory1.jpg" alt="旅行"> -->
             <div class="sl-ph">🌸</div>
-            <div class="sl-cap">🌸 初めてのふたり旅 — ○○にて</div>
+            <div class="sl-cap">🌸 初めてのふたり旅 — 箱根にて</div>
           </div>
-
           <div class="sl-item">
             <!-- <img src="./img/memory2.jpg" alt="デート"> -->
             <div class="sl-ph">🌊</div>
-            <div class="sl-cap">🌊 夏のデート — ○○で見た夕日</div>
+            <div class="sl-cap">🌊 夏のデート — 中目黒で</div>
           </div>
-
           <div class="sl-item">
             <!-- <img src="./img/memory3.jpg" alt="記念日"> -->
             <div class="sl-ph">🎂</div>
-            <div class="sl-cap">🎂 記念日サプライズ — 手作りケーキ</div>
+            <div class="sl-cap">🎂 記念日サプライズ</div>
           </div>
-
           <div class="sl-item">
             <!-- <img src="./img/memory4.jpg" alt="旅行2"> -->
-            <div class="sl-ph">✈️</div>
-            <div class="sl-cap">✈️ 海外旅行 — 念願の○○へ</div>
+            <div class="sl-ph">🌺</div>
+            <div class="sl-cap">🌺 ハワイ旅行 — プロポーズの地</div>
           </div>
-
           <div class="sl-item">
             <!-- <img src="./img/memory5.jpg" alt="プロポーズ"> -->
             <div class="sl-ph">💍</div>
-            <div class="sl-cap">💍 プロポーズの夜 — 忘れられない瞬間</div>
+            <div class="sl-cap">💍 プロポーズの瞬間 — 忘れられない海辺</div>
           </div>
-
         </div>
       </div>
-
       <div class="sl-ctrl">
         <button class="sl-btn" id="memPrev">←</button>
         <div class="sl-dots" id="memDots"></div>
@@ -1295,14 +983,13 @@
     </div>
   </section>
 
-  <!-- ⑧ クイズ ================================================== -->
+  <!-- ⑧ クイズ -->
   <section id="quiz" class="sec">
     <div class="inner">
       <p class="eyebrow">Quiz Time</p>
       <h2 class="sec-title">ふたりに関する<em>クイズ</em></h2>
       <p style="font-size:0.82rem;color:var(--text-sub);margin-bottom:30px;text-align:center;">全8問 — どれだけ知ってるかな？</p>
 
-      <!-- クイズ1 -->
       <div class="g-card qz-card fu">
         <p class="qz-q"><span class="qn">Q1.</span>ふたりが初めて出会った場所は？</p>
         <div class="qz-opts" data-ans="1">
@@ -1311,10 +998,9 @@
           <button class="qz-opt" data-i="2">🏢 職場</button>
           <button class="qz-opt" data-i="3">🎉 パーティー</button>
         </div>
-        <div class="qz-ans">✅ 共通の友人の紹介で出会いました。最初に話したとき、自然と盛り上がったのがきっかけです。</div>
+        <div class="qz-ans">✅ 理央の会社の同期に紹介してもらいました。階段下の謎の外席が二人の出会いの場です！</div>
       </div>
 
-      <!-- クイズ2 -->
       <div class="g-card qz-card fu">
         <p class="qz-q"><span class="qn">Q2.</span>先に好きになったのは、どちら？</p>
         <div class="qz-opts" data-ans="0">
@@ -1323,82 +1009,75 @@
           <button class="qz-opt" data-i="2">🤝 同時</button>
           <button class="qz-opt" data-i="3">🤫 内緒</button>
         </div>
-        <div class="qz-ans">✅ 理央が先に好きになりました！「この人だ」と思った瞬間があったそうです。</div>
+        <div class="qz-ans">✅ 理央が先に好きになって告白しました！利帆はその日のことをあまり覚えていないとか…笑</div>
       </div>
 
-      <!-- クイズ3 -->
       <div class="g-card qz-card fu">
         <p class="qz-q"><span class="qn">Q3.</span>初デートの場所は？</p>
         <div class="qz-opts" data-ans="2">
-          <button class="qz-opt" data-i="0">🗼 東京タワー</button>
+          <button class="qz-opt" data-i="0">🗼 東京タワー周辺</button>
           <button class="qz-opt" data-i="1">🌸 上野公園</button>
-          <button class="qz-opt" data-i="2">🏙️ ○○（実際のデート先に変更してください）</button>
-          <button class="qz-opt" data-i="3">🎭 映画館</button>
+          <button class="qz-opt" data-i="2">🏙️ 中目黒</button>
+          <button class="qz-opt" data-i="3">🎭 渋谷</button>
         </div>
-        <div class="qz-ans">✅ ○○でした。緊張しながらもとても楽しい一日だったそうです。</div>
+        <div class="qz-ans">✅ 中目黒でご飯！ちなみに理央は仕事で遅刻しています。最初からこれです笑</div>
       </div>
 
-      <!-- クイズ4 -->
       <div class="g-card qz-card fu">
-        <p class="qz-q"><span class="qn">Q4.</span>ふたりが一番印象的だった旅行先は？</p>
-        <div class="qz-opts" data-ans="3">
-          <button class="qz-opt" data-i="0">🗻 北海道</button>
-          <button class="qz-opt" data-i="1">🌺 沖縄</button>
-          <button class="qz-opt" data-i="2">🏯 京都</button>
-          <button class="qz-opt" data-i="3">✈️ ○○（実際の旅行先に変更してください）</button>
-        </div>
-        <div class="qz-ans">✅ ○○が一番の思い出だそうです。ふたりにとって特別な場所になっています。</div>
-      </div>
-
-      <!-- クイズ5 -->
-      <div class="g-card qz-card fu">
-        <p class="qz-q"><span class="qn">Q5.</span>理央の趣味は？</p>
-        <div class="qz-opts" data-ans="0">
-          <button class="qz-opt" data-i="0">○○（実際の趣味に変更してください）</button>
-          <button class="qz-opt" data-i="1">🎸 ギター</button>
-          <button class="qz-opt" data-i="2">🎨 絵を描くこと</button>
-          <button class="qz-opt" data-i="3">🏊 水泳</button>
-        </div>
-        <div class="qz-ans">✅ 正解！理央の趣味は○○です。</div>
-      </div>
-
-      <!-- クイズ6 -->
-      <div class="g-card qz-card fu">
-        <p class="qz-q"><span class="qn">Q6.</span>利帆の好きな食べ物は？</p>
+        <p class="qz-q"><span class="qn">Q4.</span>ふたりの最初の旅行先は？</p>
         <div class="qz-opts" data-ans="1">
-          <button class="qz-opt" data-i="0">🍜 ラーメン</button>
-          <button class="qz-opt" data-i="1">○○（実際の食べ物に変更してください）</button>
-          <button class="qz-opt" data-i="2">🍣 お寿司</button>
-          <button class="qz-opt" data-i="3">🍕 ピザ</button>
+          <button class="qz-opt" data-i="0">🗻 軽井沢</button>
+          <button class="qz-opt" data-i="1">🏔️ 箱根</button>
+          <button class="qz-opt" data-i="2">🌺 沖縄</button>
+          <button class="qz-opt" data-i="3">✈️ ハワイ</button>
         </div>
-        <div class="qz-ans">✅ 正解！利帆の大好物は○○です。</div>
+        <div class="qz-ans">✅ 付き合った月に箱根へ！美味しいご飯とお酒でふたりの旅がスタートしました。</div>
       </div>
 
-      <!-- クイズ7 -->
       <div class="g-card qz-card fu">
-        <p class="qz-q"><span class="qn">Q7.</span>プロポーズはどんな場所で行われた？</p>
+        <p class="qz-q"><span class="qn">Q5.</span>理央の趣味3つ、正しいのはどれ？</p>
         <div class="qz-opts" data-ans="2">
-          <button class="qz-opt" data-i="0">🌊 海辺</button>
-          <button class="qz-opt" data-i="1">🌸 桜の公園</button>
-          <button class="qz-opt" data-i="2">🌃 夜景の見えるレストラン</button>
+          <button class="qz-opt" data-i="0">🎸 ギター・読書・釣り</button>
+          <button class="qz-opt" data-i="1">🎨 絵・登山・料理</button>
+          <button class="qz-opt" data-i="2">⚽ サッカー・アニメ・サウナ</button>
+          <button class="qz-opt" data-i="3">🏊 水泳・映画・DIY</button>
+        </div>
+        <div class="qz-ans">✅ サッカー・アニメ・サウナが正解！休日はこの3つにお世話になっています。</div>
+      </div>
+
+      <div class="g-card qz-card fu">
+        <p class="qz-q"><span class="qn">Q6.</span>利帆が嫌いな食べ物のジャンルは？</p>
+        <div class="qz-opts" data-ans="3">
+          <button class="qz-opt" data-i="0">🍄 キノコ類</button>
+          <button class="qz-opt" data-i="1">🌶️ 辛いもの</button>
+          <button class="qz-opt" data-i="2">🐟 魚介類</button>
+          <button class="qz-opt" data-i="3">🍈 瓜類</button>
+        </div>
+        <div class="qz-ans">✅ 瓜類が苦手！初めて会った日に色々残していたのが理央の記憶に残っています笑</div>
+      </div>
+
+      <div class="g-card qz-card fu">
+        <p class="qz-q"><span class="qn">Q7.</span>プロポーズはどこで行われた？</p>
+        <div class="qz-opts" data-ans="1">
+          <button class="qz-opt" data-i="0">🌸 京都の桜の下</button>
+          <button class="qz-opt" data-i="1">🌺 ハワイの海辺</button>
+          <button class="qz-opt" data-i="2">🌃 東京の夜景レストラン</button>
           <button class="qz-opt" data-i="3">🏠 自宅</button>
         </div>
-        <div class="qz-ans">✅ 夜景の見えるレストランでのプロポーズ。特別な夜になりました。</div>
+        <div class="qz-ans">✅ ハワイの海辺でプロポーズ！直前に理央がクレカを紛失するハプニングつき。</div>
       </div>
 
-      <!-- クイズ8 -->
       <div class="g-card qz-card fu">
-        <p class="qz-q"><span class="qn">Q8.</span>ふたりが将来一緒にやりたいことは？</p>
-        <div class="qz-opts" data-ans="0">
-          <button class="qz-opt" data-i="0">○○（実際の夢に変更してください）</button>
-          <button class="qz-opt" data-i="1">🏆 スポーツ大会に出場する</button>
-          <button class="qz-opt" data-i="2">🎤 カラオケ大会で優勝する</button>
-          <button class="qz-opt" data-i="3">🚀 宇宙旅行に行く</button>
+        <p class="qz-q"><span class="qn">Q8.</span>理央が自分の性格を一言で表すと？</p>
+        <div class="qz-opts" data-ans="2">
+          <button class="qz-opt" data-i="0">🧘 穏やか</button>
+          <button class="qz-opt" data-i="1">🔥 情熱的</button>
+          <button class="qz-opt" data-i="2">😄 人類で最も楽観的人間</button>
+          <button class="qz-opt" data-i="3">🤔 慎重派</button>
         </div>
-        <div class="qz-ans">✅ ふたりの夢は○○することです。一緒に叶えていきたいと思っています。</div>
+        <div class="qz-ans">✅「人類で最も楽観的人間」が理央の自己評価！利帆曰く「メンタルの強さを極めている」そうです。</div>
       </div>
 
-      <!-- スコア表示 -->
       <div class="g-card" id="quizScore">
         <p style="font-size:0.78rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:12px;font-family:var(--font-d);">RESULT</p>
         <div class="score-num" id="scoreNum">0 / 8</div>
@@ -1407,98 +1086,33 @@
     </div>
   </section>
 
-  <!-- ⑨ ミニゲーム（しおりページ） =============================== -->
-  <section id="minigame" class="sec" style="justify-content:center;text-align:center;">
-    <div class="inner">
-      <p class="eyebrow">Mini Game</p>
-      <h2 class="sec-title">ミニ<em>ゲーム</em></h2>
-      <p style="font-size:0.88rem;color:var(--text-sub);margin-bottom:8px;">理央と利帆がドラゴンを討伐する！</p>
-      <p style="font-size:0.78rem;color:var(--text-sub);margin-bottom:32px;letter-spacing:0.12em;">3回攻撃して倒せ！</p>
-      <button id="gameBtn">⚔️ ミニゲームで遊ぶ</button>
-    </div>
-  </section>
-
-  <!-- ⑩ エンディング ============================================= -->
+  <!-- ⑩ エンディング -->
   <section id="ending">
     <div class="end-star">🌙 ✦ ⭐</div>
     <h2 class="end-title">
       本日はお越しいただき<br />
-      誠にありがとうございました
+      誠にありがとうございます
     </h2>
     <p class="end-names">四辻 理央 ＆ 片岡 利帆</p>
-    <p class="end-date">2024 . XX . XX</p>
+    <p class="end-date">2026 . 07 . 19</p>
+
+    <!-- ハートボタン -->
+    <button id="heartBtn">💗 押してみて</button>
   </section>
 
 </div><!-- /main -->
 
-<!-- ================================================================
-     ゲーム画面（フルスクリーンオーバーレイ）
-================================================================ -->
-<div id="gameScreen">
-  <!-- Canvas（火山・炎の背景） -->
-  <canvas id="gameCanvas"></canvas>
-
-  <!-- ゲームUI -->
-  <div class="game-ui" id="gameUI">
-    <p class="game-title">⚔️ 理央と利帆のドラゴン討伐 ⚔️</p>
-
-    <!-- ドラゴンHPバー -->
-    <div class="hp-wrap">
-      <div id="hpBar" style="width:100%"></div>
-      <div class="hp-label" id="hpLabel">Dragon HP 300 / 300</div>
-    </div>
-    <p class="hp-txt" id="hpTxt">ドラゴンのHPを0にせよ！</p>
-
-    <!-- キャラクターゾーン -->
-    <div class="char-zone">
-      <!-- 味方（左） -->
-      <div class="ally-wrap">
-        <div class="ally-char">🧙‍♂️</div>
-        <div class="ally-name">理央</div>
-      </div>
-
-      <!-- ドラゴン（中央） -->
-      <div class="dragon-wrap">
-        <div id="dragonEl">🐉</div>
-        <!-- 攻撃エフェクト -->
-        <div class="atk-fx" id="atkFx1">✨</div>
-        <div class="atk-fx" id="atkFx2">🔥</div>
-        <div class="atk-fx" id="atkFx3">⚡</div>
-        <!-- 勝利エフェクト -->
-        <canvas id="winEffect"></canvas>
-      </div>
-
-      <!-- 味方（右） -->
-      <div class="ally-wrap">
-        <div class="ally-char">🧝‍♀️</div>
-        <div class="ally-name">利帆</div>
-      </div>
-    </div>
-
-    <!-- バトルログ -->
-    <div id="battleLog">ドラゴンが現れた！魔法で攻撃しよう！</div>
-
-    <!-- 攻撃ボタン -->
-    <button id="atkBtn">✨ 魔法で攻撃 ✨</button>
-
-    <!-- 戻るボタン -->
-    <button id="backBtn">← しおりへ戻る</button>
-  </div>
-
-  <!-- 勝利画面 -->
-  <div id="winScreen">
-    <p class="win-title">🏆 VICTORY! 🏆</p>
-    <p class="win-sub">ドラゴンを討伐した！<br />理央と利帆、最高のチーム！</p>
-    <button id="returnBtn">🌙 しおりへ戻る</button>
+<!-- 「今日はありがとう！」テキスト演出 -->
+<div id="thankMsg">
+  <div class="thank-inner">
+    <div class="thank-hearts-row">💗 💕 💗</div>
+    <p class="thank-text">今日はありがとう！</p>
+    <p class="thank-sub">— 理央 ＆ 利帆 —</p>
   </div>
 </div>
 
-<!-- スクロールトップボタン -->
 <button id="toTop" aria-label="ページトップへ">↑</button>
 
-<!-- ================================================================
-     JavaScript
-================================================================ -->
 <script>
 /* ================================================================
    1. 星パーティクル Canvas
@@ -1512,20 +1126,17 @@
     W = c.width  = window.innerWidth;
     H = c.height = window.innerHeight;
   }
-
   function init(n){
     stars = [];
     for(let i=0;i<n;i++){
       stars.push({
-        x: Math.random()*W,
-        y: Math.random()*H,
+        x: Math.random()*W, y: Math.random()*H,
         r: Math.random()*1.15+0.2,
         sp: Math.random()*0.0025+0.0008,
         ph: Math.random()*Math.PI*2
       });
     }
   }
-
   function draw(t){
     ctx.clearRect(0,0,W,H);
     stars.forEach(s=>{
@@ -1537,14 +1148,13 @@
     });
     requestAnimationFrame(draw);
   }
-
   window.addEventListener('resize',()=>{ resize(); init(220); });
   resize(); init(220);
   requestAnimationFrame(draw);
 })();
 
 /* ================================================================
-   2. ローディング → メインコンテンツ表示
+   2. ローディング
 ================================================================ */
 window.addEventListener('load',()=>{
   setTimeout(()=>{
@@ -1561,67 +1171,44 @@ document.getElementById('startBtn').addEventListener('click',()=>{
 });
 
 /* ================================================================
-   4. ナビゲーション制御（スクロールで非表示）
+   4. ナビゲーション
 ================================================================ */
 let lastY = 0;
 const nav = document.getElementById('nav');
-
 window.addEventListener('scroll',()=>{
   const y = window.scrollY;
   nav.classList.toggle('hidden', y > lastY && y > 80);
   lastY = y;
   document.getElementById('toTop').classList.toggle('show', y > 500);
 },{passive:true});
-
 document.getElementById('toTop').addEventListener('click',()=>{
   window.scrollTo({top:0,behavior:'smooth'});
 });
 
 /* ================================================================
-   5. ハンバーガーメニュー + ドロワー
-   × ボタンで確実に閉じる仕様
+   5. ハンバーガーメニュー
 ================================================================ */
 const menuBtn = document.getElementById('menuBtn');
 const drawer  = document.getElementById('drawer');
-
-function openDrawer(){
-  drawer.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeDrawer(){
-  drawer.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
+function openDrawer(){ drawer.classList.add('open'); document.body.style.overflow='hidden'; }
+function closeDrawer(){ drawer.classList.remove('open'); document.body.style.overflow=''; }
 menuBtn.addEventListener('click', openDrawer);
-
-// ×ボタンで閉じる
 document.getElementById('drawerClose').addEventListener('click', closeDrawer);
-
-// ドロワー内リンクをタップしても閉じる
-drawer.querySelectorAll('.d-link').forEach(a=>{
-  a.addEventListener('click', closeDrawer);
-});
-
-// ドロワー外側タップでも閉じる
-drawer.addEventListener('click', e=>{
-  if(e.target === drawer) closeDrawer();
-});
+drawer.querySelectorAll('.d-link').forEach(a=>a.addEventListener('click', closeDrawer));
+drawer.addEventListener('click', e=>{ if(e.target===drawer) closeDrawer(); });
 
 /* ================================================================
-   6. スクロールアニメーション（IntersectionObserver）
+   6. スクロールアニメーション
 ================================================================ */
-const fuEls = document.querySelectorAll('.fu');
 const io = new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
   });
 },{threshold:0.13});
-fuEls.forEach(el=>io.observe(el));
+document.querySelectorAll('.fu').forEach(el=>io.observe(el));
 
 /* ================================================================
-   7. 汎用スライダー
+   7. スライダー
 ================================================================ */
 function makeSlider(trackId, prevId, nextId, dotsId){
   const track = document.getElementById(trackId);
@@ -1629,29 +1216,21 @@ function makeSlider(trackId, prevId, nextId, dotsId){
   const next  = document.getElementById(nextId);
   const dots  = document.getElementById(dotsId);
   if(!track) return;
-
-  const items = track.children;
-  const n = items.length;
+  const n = track.children.length;
   let cur = 0;
-
-  // ドット生成
   for(let i=0;i<n;i++){
     const d = document.createElement('div');
     d.className = 'sl-dot'+(i===0?' on':'');
     d.addEventListener('click',()=>go(i));
     dots.appendChild(d);
   }
-
   function go(idx){
     cur = (idx+n)%n;
     track.style.transform = `translateX(-${cur*100}%)`;
     dots.querySelectorAll('.sl-dot').forEach((d,i)=>d.classList.toggle('on',i===cur));
   }
-
   prev.addEventListener('click',()=>go(cur-1));
   next.addEventListener('click',()=>go(cur+1));
-
-  // タッチスワイプ
   let sx=0;
   track.parentElement.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{passive:true});
   track.parentElement.addEventListener('touchend',e=>{
@@ -1659,49 +1238,39 @@ function makeSlider(trackId, prevId, nextId, dotsId){
     if(Math.abs(dx)>38) go(cur+(dx<0?1:-1));
   });
 }
-
 makeSlider('memTrack','memPrev','memNext','memDots');
 
 /* ================================================================
-   8. クイズロジック（8問 + スコア集計）
+   8. クイズ
 ================================================================ */
-let answered = 0;
-let score = 0;
-const totalQ = 8;
-
+let answered=0, score=0;
+const totalQ=8;
 document.querySelectorAll('.qz-card').forEach(card=>{
   const opts    = card.querySelectorAll('.qz-opt');
   const ansEl   = card.querySelector('.qz-ans');
   const correct = parseInt(card.querySelector('.qz-opts').dataset.ans,10);
-  let done = false;
-
+  let done=false;
   opts.forEach(btn=>{
     btn.addEventListener('click',()=>{
       if(done) return;
-      done = true;
-      answered++;
-      const idx = parseInt(btn.dataset.i,10);
-      const isOk = idx===correct;
+      done=true; answered++;
+      const idx=parseInt(btn.dataset.i,10);
+      const isOk=idx===correct;
       if(isOk) score++;
       btn.classList.add(isOk?'ok':'ng');
       if(!isOk) opts[correct].classList.add('ok');
       opts.forEach(b=>{ b.disabled=true; });
       ansEl.classList.add('show');
-
-      // 全問回答したらスコア表示
       if(answered===totalQ){
-        const scoreBox = document.getElementById('quizScore');
-        const numEl    = document.getElementById('scoreNum');
-        const msgEl    = document.getElementById('scoreMsg');
-        numEl.textContent = `${score} / ${totalQ}`;
-        const msgs = [
-          [8,'🏆 完璧！さすがです！ふたりのことを完全に理解してくれていますね！'],
-          [6,'🌟 すばらしい！ふたりのことをよく知っていてくれています！'],
-          [4,'💛 なかなかよく知ってますね！これからもっと仲良くなりましょう！'],
+        const scoreBox=document.getElementById('quizScore');
+        document.getElementById('scoreNum').textContent=`${score} / ${totalQ}`;
+        const msgs=[
+          [8,'🏆 完璧！ふたりのことを完全に理解してくれていますね！'],
+          [6,'🌟 すばらしい！よく知っていてくれています！'],
+          [4,'💛 なかなか！これからもっと仲良くなりましょう！'],
           [0,'🌸 これからもっとふたりのことを知ってもらえたら嬉しいです！'],
         ];
-        const [,msg] = msgs.find(([t])=>score>=t);
-        msgEl.textContent = msg;
+        document.getElementById('scoreMsg').textContent=msgs.find(([t])=>score>=t)[1];
         scoreBox.classList.add('show');
         scoreBox.scrollIntoView({behavior:'smooth',block:'center'});
       }
@@ -1710,253 +1279,74 @@ document.querySelectorAll('.qz-card').forEach(card=>{
 });
 
 /* ================================================================
-   9. ミニゲーム
+   9. ハートボタン演出
+   ボタンを押すと：
+   - ハートパーティクルが画面に降り注ぐ
+   - 「今日はありがとう！」のメッセージが中央に表示
 ================================================================ */
-const gameScreen = document.getElementById('gameScreen');
-const gameCanv   = document.getElementById('gameCanvas');
-const gCtx       = gameCanv.getContext('2d');
-
-// 火山背景アニメーション変数
-let lavaParts = [];
-let bgAnim;
-let gameOpen = false;
-
-// ゲーム状態
-const DRAGON_MAX_HP = 300;
-let dragonHp  = DRAGON_MAX_HP;
-let atkCount  = 0;
-let gameOver  = false;
-
-const hpBar    = document.getElementById('hpBar');
-const hpLabel  = document.getElementById('hpLabel');
-const hpTxt    = document.getElementById('hpTxt');
-const atkBtn   = document.getElementById('atkBtn');
-const battleLog= document.getElementById('battleLog');
-const gameUI   = document.getElementById('gameUI');
-const winScreen= document.getElementById('winScreen');
-const winEffect= document.getElementById('winEffect');
-const winCtx   = winEffect.getContext('2d');
-
-/* 火山・溶岩背景描画 */
-function resizeGameCanvas(){
-  gameCanv.width  = window.innerWidth;
-  gameCanv.height = window.innerHeight;
-  winEffect.width  = winEffect.parentElement.offsetWidth;
-  winEffect.height = winEffect.parentElement.offsetHeight;
-}
-
-function initLava(){
-  lavaParts = [];
-  for(let i=0;i<40;i++){
-    lavaParts.push({
-      x: Math.random()*gameCanv.width,
-      y: gameCanv.height*0.6 + Math.random()*gameCanv.height*0.4,
-      r: Math.random()*18+6,
-      sp: Math.random()*0.8+0.3,
-      ph: Math.random()*Math.PI*2,
-      col: `hsl(${Math.random()*30+5},100%,${Math.floor(Math.random()*25+35)}%)`
-    });
-  }
-}
-
-function drawBg(t){
-  const w=gameCanv.width, h=gameCanv.height;
-  // 空（暗い赤〜黒）
-  const sky = gCtx.createLinearGradient(0,0,0,h*0.65);
-  sky.addColorStop(0,'#0a0005');
-  sky.addColorStop(0.5,'#1a0510');
-  sky.addColorStop(1,'#3a0a00');
-  gCtx.fillStyle=sky; gCtx.fillRect(0,0,w,h);
-
-  // 遠景の火山シルエット
-  gCtx.fillStyle='#150008';
-  gCtx.beginPath(); gCtx.moveTo(0,h*0.65);
-  gCtx.lineTo(w*0.15,h*0.25); gCtx.lineTo(w*0.3,h*0.65);
-  gCtx.lineTo(w*0.45,h*0.3); gCtx.lineTo(w*0.6,h*0.65);
-  gCtx.lineTo(w*0.78,h*0.2); gCtx.lineTo(w,h*0.65); gCtx.lineTo(w,h); gCtx.lineTo(0,h);
-  gCtx.closePath(); gCtx.fill();
-
-  // 噴火の光（火山の山頂から）
-  [[w*0.15,h*0.25],[w*0.45,h*0.3],[w*0.78,h*0.2]].forEach(([cx,cy])=>{
-    const glow = gCtx.createRadialGradient(cx,cy,0,cx,cy,80);
-    glow.addColorStop(0,`rgba(255,120,0,${0.4+Math.sin(t*0.003)*0.2})`);
-    glow.addColorStop(1,'transparent');
-    gCtx.fillStyle=glow; gCtx.fillRect(cx-80,cy-80,160,160);
-  });
-
-  // 溶岩地帯
-  const lava = gCtx.createLinearGradient(0,h*0.62,0,h);
-  lava.addColorStop(0,'#8b1a00'); lava.addColorStop(0.3,'#cc3300');
-  lava.addColorStop(0.6,'#ff5500'); lava.addColorStop(1,'#ff2200');
-  gCtx.fillStyle=lava; gCtx.fillRect(0,h*0.62,w,h*0.38);
-
-  // 溶岩のさざ波
-  gCtx.strokeStyle=`rgba(255,200,0,0.25)`;
-  gCtx.lineWidth=2;
-  for(let row=0;row<4;row++){
-    gCtx.beginPath();
-    const y0=h*(0.65+row*0.07);
-    for(let x=0;x<=w;x+=8){
-      const y=y0+Math.sin((x*0.02+t*0.002)+row)*5;
-      row===0&&x===0?gCtx.moveTo(x,y):gCtx.lineTo(x,y);
-    }
-    gCtx.stroke();
-  }
-
-  // 溶岩パーティクル
-  lavaParts.forEach(p=>{
-    p.y -= p.sp;
-    if(p.y < h*0.3){ p.y = h; p.x = Math.random()*w; }
-    const a = 0.5+Math.sin(t*0.003+p.ph)*0.3;
-    gCtx.beginPath();
-    gCtx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    gCtx.fillStyle=p.col.replace(')',`,${a})`).replace('hsl','hsla');
-    gCtx.fill();
-  });
-
-  // 炎エフェクト（下部）
-  for(let i=0;i<6;i++){
-    const fx=w*(0.05+i*0.18);
-    const fh=50+Math.sin(t*0.004+i)*30;
-    const fl=gCtx.createLinearGradient(fx,h*0.62,fx,h*0.62-fh);
-    fl.addColorStop(0,'rgba(255,100,0,0.8)');
-    fl.addColorStop(0.5,'rgba(255,200,0,0.4)');
-    fl.addColorStop(1,'transparent');
-    gCtx.fillStyle=fl;
-    gCtx.beginPath();
-    gCtx.ellipse(fx,h*0.62,14+Math.sin(t*0.005+i)*4,fh,0,Math.PI,0);
-    gCtx.fill();
-  }
-}
-
-function bgLoop(t){
-  if(!gameOpen) return;
-  drawBg(t);
-  bgAnim = requestAnimationFrame(bgLoop);
-}
-
-/* ゲームを開く */
-document.getElementById('gameBtn').addEventListener('click',()=>{
-  openGame();
+document.getElementById('heartBtn').addEventListener('click', function(){
+  launchHearts();
+  showThankMessage();
 });
 
-function openGame(){
-  // 状態リセット
-  dragonHp = DRAGON_MAX_HP;
-  atkCount = 0;
-  gameOver = false;
-  hpBar.style.width = '100%';
-  hpLabel.textContent = `Dragon HP ${dragonHp} / ${DRAGON_MAX_HP}`;
-  hpTxt.textContent = 'ドラゴンのHPを0にせよ！';
-  battleLog.textContent = 'ドラゴンが現れた！魔法で攻撃しよう！';
-  atkBtn.disabled = false;
-  document.getElementById('dragonEl').textContent = '🐉';
-  document.getElementById('dragonEl').classList.remove('hit');
-  winScreen.classList.remove('show');
-  gameUI.style.display = 'flex';
+/* ハートを大量に飛ばす */
+function launchHearts(){
+  const emojis = ['💗','💕','💖','💓','🩷','✨','💝','💞'];
+  const count  = 60;
 
-  gameOpen = true;
-  gameScreen.classList.add('open');
-  document.body.style.overflow = 'hidden';
-  resizeGameCanvas();
-  initLava();
-  requestAnimationFrame(bgLoop);
-}
-
-function closeGame(){
-  gameOpen = false;
-  cancelAnimationFrame(bgAnim);
-  gameScreen.classList.remove('open');
-  document.body.style.overflow = '';
-  // しおりのゲームセクションへスクロール
-  document.getElementById('minigame').scrollIntoView({behavior:'smooth'});
-}
-
-document.getElementById('backBtn').addEventListener('click', closeGame);
-document.getElementById('returnBtn').addEventListener('click', closeGame);
-
-/* 攻撃ロジック */
-const logs = [
-  '理央が「フレアバースト」を放った！ドラゴンに100のダメージ！',
-  '利帆の「ライトニングアロー」が命中！ドラゴンに100のダメージ！',
-  '理央と利帆のWコンビネーション攻撃！ドラゴンに100のダメージ！',
-];
-const fxEmojis = ['✨','⚡','🌟'];
-
-atkBtn.addEventListener('click',()=>{
-  if(gameOver) return;
-  atkBtn.disabled = true;
-
-  const dmg = 100;
-  dragonHp = Math.max(0, dragonHp - dmg);
-  const pct = (dragonHp/DRAGON_MAX_HP*100).toFixed(0);
-
-  // HPバー更新
-  hpBar.style.width = pct+'%';
-  hpLabel.textContent = `Dragon HP ${dragonHp} / ${DRAGON_MAX_HP}`;
-  battleLog.textContent = logs[atkCount];
-
-  // ドラゴンヒットアニメ
-  const dragon = document.getElementById('dragonEl');
-  dragon.classList.remove('hit');
-  void dragon.offsetWidth;
-  dragon.classList.add('hit');
-  dragon.addEventListener('animationend',()=>dragon.classList.remove('hit'),{once:true});
-
-  // 攻撃エフェクト
-  const fx = document.getElementById(`atkFx${atkCount+1}`);
-  fx.style.fontSize = `${1.8+atkCount*0.5}rem`;
-  fx.textContent = fxEmojis[atkCount];
-  fx.className = 'atk-fx fire';
-  fx.addEventListener('animationend',()=>{ fx.className='atk-fx'; },{once:true});
-
-  atkCount++;
-
-  if(dragonHp <= 0){
-    // 勝利！
-    gameOver = true;
-    hpTxt.textContent = '🔥 ドラゴン撃破！🔥';
-    dragon.textContent = '💀';
-    dragon.style.filter = 'grayscale(1) opacity(0.4)';
-
+  for(let i=0; i<count; i++){
     setTimeout(()=>{
-      launchFireworks();
-      gameUI.style.display = 'none';
-      winScreen.classList.add('show');
-    }, 800);
-  } else {
-    hpTxt.textContent = `残りHP: ${dragonHp}！もう少し！`;
-    setTimeout(()=>{ atkBtn.disabled = false; }, 700);
-  }
-});
+      const el = document.createElement('div');
+      el.className = 'heart-particle';
 
-/* 花火エフェクト */
-function launchFireworks(){
-  const colors = ['#ffd700','#ff6b6b','#a8edea','#ff9f43','#c0f0c0','#ffffff'];
-  for(let i=0;i<50;i++){
-    setTimeout(()=>{
-      const fw = document.createElement('div');
-      fw.className = 'firework';
-      const x = Math.random()*window.innerWidth;
-      const y = Math.random()*window.innerHeight*0.7;
-      const angle = Math.random()*360;
-      const dist  = 80+Math.random()*140;
-      const tx = Math.cos(angle*Math.PI/180)*dist;
-      const ty = Math.sin(angle*Math.PI/180)*dist;
-      fw.style.cssText = `
-        left:${x}px; top:${y}px;
-        background:${colors[Math.floor(Math.random()*colors.length)]};
-        --tx: translate(${tx}px,${ty}px);
-        animation-duration: ${0.8+Math.random()*0.5}s;
+      // ランダムなハート絵文字
+      el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+
+      // 発生位置：画面下部〜中央あたり
+      const startX = 10 + Math.random() * 80; // vw
+      const startY = 60 + Math.random() * 35; // vh
+
+      // 飛ぶ方向：上方向に広がる
+      const tx = (Math.random()-0.5) * 300 + 'px';
+      const ty = -(120 + Math.random()*260) + 'px';
+      const sc = 0.4 + Math.random()*1.2;
+      const rot0 = (Math.random()-0.5)*30 + 'deg';
+      const rot1 = (Math.random()-0.5)*120 + 'deg';
+      const dur  = 0.9 + Math.random()*1.0 + 's';
+      const size = 1.0 + Math.random()*1.4;
+
+      el.style.cssText = `
+        left: ${startX}vw;
+        top: ${startY}vh;
+        font-size: ${size}rem;
+        --tx: ${tx};
+        --ty: ${ty};
+        --sc: ${sc};
+        --rot0: ${rot0};
+        --rot1: ${rot1};
+        --dur: ${dur};
       `;
-      document.body.appendChild(fw);
-      fw.addEventListener('animationend',()=>fw.remove());
-    }, i*40);
+
+      document.body.appendChild(el);
+      el.addEventListener('animationend', ()=> el.remove());
+    }, i * 28);
   }
 }
 
-/* ウィンドウリサイズ */
-window.addEventListener('resize',()=>{ if(gameOpen) resizeGameCanvas(); });
+/* 「今日はありがとう！」メッセージを表示 */
+function showThankMessage(){
+  const msg = document.getElementById('thankMsg');
+  msg.classList.remove('hide');
+  msg.classList.add('show');
+
+  // 2.8秒後にフェードアウト
+  setTimeout(()=>{
+    msg.classList.remove('show');
+    msg.classList.add('hide');
+    // アニメーション終了後にhideクラスをリセット
+    setTimeout(()=> msg.classList.remove('hide'), 500);
+  }, 2800);
+}
 
 </script>
 </body>
