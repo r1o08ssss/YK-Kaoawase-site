@@ -190,7 +190,7 @@
     #startBtn::before { content: ''; position: absolute; inset: 0; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s var(--ease); z-index: -1; }
     #startBtn:hover::before { transform: scaleX(1); }
     #startBtn:hover { color: var(--bg-deep); transform: translateY(-2px); }
-    .scroll-hint { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 0.65rem; letter-spacing: 0.28em; color: var(--text-sub); opacity: 0; animation: fid 1s ease 3s forwards; }
+    .scroll-hint { position: absolute; bottom: 28px; left: 0; right: 0; margin: 0 auto; width: fit-content; display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 0.65rem; letter-spacing: 0.28em; color: var(--text-sub); opacity: 0; animation: fid 1s ease 3s forwards; }
     .s-dot { width: 4px; height: 26px; border: 1px solid rgba(201,169,110,0.35); border-radius: 4px; overflow: hidden; position: relative; }
     .s-dot::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%; background: var(--gold); border-radius: 4px; animation: sd 1.8s ease infinite; }
     @keyframes sd  { 0%{top:0}100%{top:100%} }
