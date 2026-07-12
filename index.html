@@ -37,27 +37,18 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
-    img { display: block; width: 100%; height: 100%; object-fit: cover; }
     button { cursor: pointer; }
 
-    /* 星背景 Canvas */
     #starCanvas {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
+      position: fixed; inset: 0;
+      z-index: 0; pointer-events: none;
     }
 
-    /* ローディング */
     #loading {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: var(--bg-deep);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      position: fixed; inset: 0;
+      z-index: 9999; background: var(--bg-deep);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       transition: opacity 0.9s var(--ease), visibility 0.9s var(--ease);
     }
     #loading.hide { opacity: 0; visibility: hidden; }
@@ -78,157 +69,105 @@
       opacity: 0.6;
     }
 
-    /* 固定ナビゲーション */
     #nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
+      position: fixed; top: 0; left: 0; right: 0;
       z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 14px 20px;
       background: rgba(8,8,24,0.72);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
       border-bottom: 1px solid rgba(201,169,110,0.12);
       transition: transform 0.4s var(--ease);
     }
     #nav.hidden { transform: translateY(-100%); }
-    .nav-logo {
-      font-family: var(--font-d);
-      font-size: 1rem;
-      letter-spacing: 0.14em;
-      color: var(--gold-light);
-    }
+    .nav-logo { font-family: var(--font-d); font-size: 1rem; letter-spacing: 0.14em; color: var(--gold-light); }
     .nav-logo span { color: var(--gold); }
     #menuBtn {
-      width: 42px; height: 42px;
-      border: none; background: transparent;
+      width: 42px; height: 42px; border: none; background: transparent;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 6px;
       z-index: 302; position: relative;
     }
-    .hb {
-      width: 24px; height: 1.5px;
-      background: var(--gold-light);
-      transition: transform 0.4s var(--ease), opacity 0.3s;
-      transform-origin: center;
-    }
+    .hb { width: 24px; height: 1.5px; background: var(--gold-light); transition: transform 0.4s var(--ease), opacity 0.3s; transform-origin: center; }
 
-    /* ドロワーメニュー */
     #drawer {
-      position: fixed;
-      inset: 0;
-      z-index: 300;
+      position: fixed; inset: 0; z-index: 300;
       background: rgba(6,6,20,0.97);
-      backdrop-filter: blur(32px);
-      -webkit-backdrop-filter: blur(32px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      opacity: 0;
-      visibility: hidden;
+      backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 6px;
+      opacity: 0; visibility: hidden;
       transition: opacity 0.4s var(--ease), visibility 0.4s var(--ease);
     }
     #drawer.open { opacity: 1; visibility: visible; }
     #drawerClose {
-      position: absolute;
-      top: 18px; right: 20px;
+      position: absolute; top: 18px; right: 20px;
       width: 44px; height: 44px;
-      border: 1px solid var(--gold-dim);
-      border-radius: 50%;
-      background: transparent;
-      color: var(--gold-light);
-      font-size: 1.25rem;
+      border: 1px solid var(--gold-dim); border-radius: 50%;
+      background: transparent; color: var(--gold-light); font-size: 1.25rem;
       display: flex; align-items: center; justify-content: center;
       transition: background 0.3s, transform 0.3s;
     }
     #drawerClose:hover { background: rgba(201,169,110,0.15); transform: rotate(90deg); }
     .d-link {
-      font-family: var(--font-d);
-      font-size: 1.25rem;
-      letter-spacing: 0.18em;
-      color: var(--text-main);
-      text-decoration: none;
-      padding: 10px 24px;
-      transition: color 0.3s;
+      font-family: var(--font-d); font-size: 1.25rem; letter-spacing: 0.18em;
+      color: var(--text-main); text-decoration: none;
+      padding: 10px 24px; transition: color 0.3s;
       display: flex; align-items: center; gap: 12px;
     }
     .d-link .di { font-size: 0.95rem; opacity: 0.55; }
     .d-link:hover { color: var(--gold); }
 
-    /* メインコンテンツ */
     #main { position: relative; z-index: 1; display: none; }
     #main.show { display: block; }
 
-    /* セクション共通 */
+    /* ── セクション共通（スマホ最優先） ── */
     .sec {
-      min-height: 100svh;
-      padding: 96px 20px 64px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
+      padding: 76px 16px 52px;
+      display: flex; flex-direction: column;
+      align-items: center; position: relative;
     }
-    .inner { width: 100%; max-width: 680px; }
+    .inner { width: 100%; max-width: 560px; }
+
     .eyebrow {
-      font-family: var(--font-d);
-      font-size: 0.7rem;
-      letter-spacing: 0.38em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 10px;
+      font-family: var(--font-d); font-size: 0.7rem;
+      letter-spacing: 0.38em; color: var(--gold);
+      text-transform: uppercase; margin-bottom: 10px;
     }
     .sec-title {
       font-family: var(--font-d);
-      font-size: clamp(1.9rem, 6.5vw, 2.8rem);
-      font-weight: 300;
-      line-height: 1.25;
-      color: var(--gold-light);
-      margin-bottom: 40px;
-      letter-spacing: 0.05em;
+      font-size: clamp(1.6rem, 6vw, 2.4rem);
+      font-weight: 300; line-height: 1.25;
+      color: var(--gold-light); margin-bottom: 28px; letter-spacing: 0.05em;
     }
     .sec-title em { font-style: italic; color: var(--gold); }
 
-    /* ガラスカード */
     .g-card {
       background: var(--bg-card);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      padding: 28px 24px;
-      position: relative;
-      overflow: hidden;
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      padding: 22px 18px;
+      position: relative; overflow: hidden;
     }
     .g-card::before {
       content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
       background: linear-gradient(90deg, transparent, rgba(201,169,110,0.55), transparent);
     }
 
-    /* フェードアップ */
-    .fu {
-      opacity: 0;
-      transform: translateY(36px);
-      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
-    }
+    .fu { opacity: 0; transform: translateY(36px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
     .fu.in { opacity: 1; transform: translateY(0); }
     .fu:nth-child(2) { transition-delay: 0.1s; }
     .fu:nth-child(3) { transition-delay: 0.2s; }
     .fu:nth-child(4) { transition-delay: 0.3s; }
 
-    /* ① Hero */
+    /* ── Hero ── */
     #hero {
       min-height: 100svh;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      text-align: center;
-      padding: 48px 24px;
+      text-align: center; padding: 48px 24px;
       position: relative; z-index: 1;
     }
     .hero-glow {
@@ -236,450 +175,159 @@
       background: radial-gradient(ellipse 70% 50% at 50% 60%, rgba(201,169,110,0.07) 0%, transparent 70%);
       pointer-events: none;
     }
-    .hero-date {
-      font-family: var(--font-d);
-      font-size: 0.78rem;
-      letter-spacing: 0.4em;
-      color: var(--gold);
-      margin-bottom: 28px;
-      opacity: 0;
-      animation: fid 1s ease 1.4s forwards;
-    }
-    .hero-names {
-      font-family: var(--font-d);
-      font-size: clamp(1.8rem, 8vw, 3.4rem);
-      font-weight: 300;
-      color: var(--gold-light);
-      letter-spacing: 0.12em;
-      line-height: 1.25;
-      margin-bottom: 10px;
-      opacity: 0;
-      animation: fid 1s ease 1.7s forwards;
-    }
+    .hero-date { font-family: var(--font-d); font-size: 0.78rem; letter-spacing: 0.4em; color: var(--gold); margin-bottom: 28px; opacity: 0; animation: fid 1s ease 1.4s forwards; }
+    .hero-names { font-family: var(--font-d); font-size: clamp(1.8rem, 8vw, 3.4rem); font-weight: 300; color: var(--gold-light); letter-spacing: 0.12em; line-height: 1.25; margin-bottom: 10px; opacity: 0; animation: fid 1s ease 1.7s forwards; }
     .hero-names .x { color: var(--gold); padding: 0 12px; font-style: italic; }
-    .hero-sub {
-      font-size: 0.88rem;
-      letter-spacing: 0.25em;
-      color: var(--text-sub);
-      margin-bottom: 56px;
-      opacity: 0;
-      animation: fid 1s ease 2.0s forwards;
-    }
+    .hero-sub { font-size: 0.88rem; letter-spacing: 0.25em; color: var(--text-sub); margin-bottom: 56px; opacity: 0; animation: fid 1s ease 2.0s forwards; }
     #startBtn {
-      border: 1px solid var(--gold);
-      background: transparent;
-      color: var(--gold-light);
-      font-family: var(--font-d);
-      font-size: 1rem;
-      letter-spacing: 0.28em;
-      padding: 16px 52px;
-      border-radius: 60px;
-      position: relative;
-      overflow: hidden;
-      transition: color 0.4s, transform 0.3s;
-      opacity: 0;
-      animation: fid 1s ease 2.3s forwards;
+      border: 1px solid var(--gold); background: transparent;
+      color: var(--gold-light); font-family: var(--font-d);
+      font-size: 1rem; letter-spacing: 0.28em; padding: 16px 52px;
+      border-radius: 60px; position: relative; overflow: hidden;
+      transition: color 0.4s, transform 0.3s; opacity: 0; animation: fid 1s ease 2.3s forwards;
     }
-    #startBtn::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: var(--gold);
-      transform: scaleX(0); transform-origin: left;
-      transition: transform 0.4s var(--ease); z-index: -1;
-    }
+    #startBtn::before { content: ''; position: absolute; inset: 0; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s var(--ease); z-index: -1; }
     #startBtn:hover::before { transform: scaleX(1); }
     #startBtn:hover { color: var(--bg-deep); transform: translateY(-2px); }
-    .scroll-hint {
-      position: absolute;
-      bottom: 28px; left: 50%;
-      transform: translateX(-50%);
-      display: flex; flex-direction: column;
-      align-items: center; gap: 8px;
-      font-size: 0.65rem;
-      letter-spacing: 0.28em;
-      color: var(--text-sub);
-      opacity: 0;
-      animation: fid 1s ease 3s forwards;
-    }
-    .s-dot {
-      width: 4px; height: 26px;
-      border: 1px solid rgba(201,169,110,0.35);
-      border-radius: 4px;
-      overflow: hidden; position: relative;
-    }
-    .s-dot::after {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 50%;
-      background: var(--gold);
-      border-radius: 4px;
-      animation: sd 1.8s ease infinite;
-    }
+    .scroll-hint { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 0.65rem; letter-spacing: 0.28em; color: var(--text-sub); opacity: 0; animation: fid 1s ease 3s forwards; }
+    .s-dot { width: 4px; height: 26px; border: 1px solid rgba(201,169,110,0.35); border-radius: 4px; overflow: hidden; position: relative; }
+    .s-dot::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%; background: var(--gold); border-radius: 4px; animation: sd 1.8s ease infinite; }
     @keyframes sd  { 0%{top:0}100%{top:100%} }
     @keyframes fid { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:translateY(0)} }
 
-    /* ② ご挨拶 */
-    #greeting .msg-box {
-      border-left: 1.5px solid var(--gold);
-      padding-left: 22px;
-      margin-bottom: 28px;
-    }
+    /* ── ご挨拶 ── */
+    #greeting .msg-box { border-left: 1.5px solid var(--gold); padding-left: 22px; margin-bottom: 28px; }
     #greeting .msg-box p { font-size: 0.93rem; line-height: 2.1; }
-    #greeting .sig {
-      text-align: right;
-      font-family: var(--font-d);
-      font-size: 1.1rem;
-      color: var(--gold-light);
-      letter-spacing: 0.14em;
-    }
+    #greeting .sig { text-align: right; font-family: var(--font-d); font-size: 1.1rem; color: var(--gold-light); letter-spacing: 0.14em; }
 
-    /* ③ プロフィール */
-    #profile .p-grid { display: grid; gap: 24px; }
-    @media(min-width:600px){ #profile .p-grid { grid-template-columns: 1fr 1fr; } }
+    /* ── プロフィール ── */
+    #profile .p-grid { display: grid; gap: 28px; }
+    @media(min-width:640px){ #profile .p-grid { grid-template-columns: 1fr 1fr; } }
+
     .p-card { overflow: hidden; }
+
+    /* ★ 写真エリア
+       縦長比率で顔が大きく見える
+       object-position: top で顔が切れないよう上寄せ */
     .p-photo {
-      height: 220px;
+      width: 100%;
+      aspect-ratio: 3 / 4;
       background: linear-gradient(135deg,#141430 0%,#0a0f28 100%);
       display: flex; align-items: center; justify-content: center;
       position: relative; overflow: hidden;
     }
-    .p-photo-ph { font-size: 4.5rem; opacity: 0.22; }
-    .p-info { padding: 22px 20px; }
-    .p-role {
-      font-family: var(--font-d);
-      font-size: 0.68rem;
-      letter-spacing: 0.32em;
-      color: var(--gold);
-      margin-bottom: 5px;
-    }
-    .p-name {
-      font-family: var(--font-d);
-      font-size: 1.85rem;
-      font-weight: 300;
-      color: var(--gold-light);
-      letter-spacing: 0.08em;
-      margin-bottom: 18px;
-    }
-    .p-name small {
+    /* ↓ img タグのスタイル（ファイル名・パスはHTML側で変えない） */
+    .p-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center; /* 顔（上部）が見切れないように */
       display: block;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      color: var(--text-sub);
-      margin-top: 2px;
     }
+    .p-photo-ph { font-size: 4.5rem; opacity: 0.22; }
+
+    .p-info { padding: 20px 18px 24px; }
+    .p-role { font-family: var(--font-d); font-size: 0.68rem; letter-spacing: 0.32em; color: var(--gold); margin-bottom: 4px; }
+    .p-name { font-family: var(--font-d); font-size: 1.7rem; font-weight: 300; color: var(--gold-light); letter-spacing: 0.08em; margin-bottom: 16px; }
+    .p-name small { display: block; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--text-sub); margin-top: 2px; }
     .p-rows { display: flex; flex-direction: column; gap: 10px; }
-    .p-row { display: flex; gap: 10px; font-size: 0.86rem; }
-    .p-lbl { min-width: 76px; font-size: 0.72rem; color: var(--gold); letter-spacing: 0.08em; padding-top: 2px; }
+    .p-row { display: flex; gap: 8px; font-size: 0.84rem; line-height: 1.65; }
+    .p-lbl { min-width: 68px; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.06em; padding-top: 2px; flex-shrink: 0; }
 
-    /* ④ 好きなところ */
+    /* ── 好きなところ ── */
     #love .love-blk { margin-bottom: 36px; }
-    .love-from {
-      font-family: var(--font-d);
-      font-size: 0.82rem;
-      letter-spacing: 0.22em;
-      color: var(--gold);
-      margin-bottom: 14px;
-    }
+    .love-from { font-family: var(--font-d); font-size: 0.82rem; letter-spacing: 0.22em; color: var(--gold); margin-bottom: 14px; }
     .love-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-    .love-list li {
-      display: flex; align-items: flex-start; gap: 12px;
-      background: var(--bg-card);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      padding: 13px 16px;
-      font-size: 0.88rem;
-      backdrop-filter: blur(10px);
-    }
-    .ln { font-family: var(--font-d); font-size: 1.05rem; color: var(--gold); min-width: 22px; line-height: 1.4; }
-    .div-line {
-      width: 44px; height: 1px;
-      background: var(--gold); opacity: 0.5;
-      margin: 28px auto;
-    }
+    .love-list li { display: flex; align-items: flex-start; gap: 10px; background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 10px; padding: 11px 14px; font-size: 0.84rem; line-height: 1.7; backdrop-filter: blur(10px); }
+    .ln { font-family: var(--font-d); font-size: 1rem; color: var(--gold); min-width: 20px; line-height: 1.5; }
+    .div-line { width: 44px; height: 1px; background: var(--gold); opacity: 0.5; margin: 28px auto; }
 
-    /* ⑤ 仕事紹介 */
-    #work .w-card { margin-bottom: 24px; }
-    .w-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
-    .w-icon {
-      width: 50px; height: 50px;
-      border-radius: 14px;
-      background: linear-gradient(135deg,rgba(201,169,110,0.18),rgba(138,180,212,0.12));
-      border: 1px solid var(--glass-border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; flex-shrink: 0;
-    }
-    .w-who { font-family: var(--font-d); font-size: 1.2rem; color: var(--gold-light); }
-    .w-role { font-size: 0.7rem; letter-spacing: 0.2em; color: var(--gold); }
-    .w-rows { display: flex; flex-direction: column; gap: 13px; }
-    .w-row { display: flex; gap: 10px; font-size: 0.86rem; }
-    .w-lbl { min-width: 72px; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.08em; padding-top: 2px; }
+    /* ── 仕事紹介 ── */
+    #work .w-card { margin-bottom: 20px; }
+    .w-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .w-icon { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg,rgba(201,169,110,0.18),rgba(138,180,212,0.12)); border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0; }
+    .w-who { font-family: var(--font-d); font-size: 1.1rem; color: var(--gold-light); }
+    .w-role { font-size: 0.66rem; letter-spacing: 0.18em; color: var(--gold); }
+    .w-rows { display: flex; flex-direction: column; gap: 12px; }
+    .w-row { display: flex; gap: 8px; font-size: 0.83rem; line-height: 1.7; }
+    .w-lbl { min-width: 62px; font-size: 0.68rem; color: var(--gold); letter-spacing: 0.06em; padding-top: 2px; flex-shrink: 0; }
 
-    /* ⑥ タイムライン */
+    /* ── タイムライン ── */
     #timeline .tl-wrap { position: relative; padding-left: 22px; }
-    .tl-wrap::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 8px; bottom: 0;
-      width: 1px;
-      background: linear-gradient(to bottom, var(--gold) 0%, rgba(201,169,110,0.1) 100%);
-    }
+    .tl-wrap::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--gold) 0%, rgba(201,169,110,0.1) 100%); }
     .tl-item { position: relative; margin-bottom: 38px; }
-    .tl-dot {
-      position: absolute;
-      left: -28px; top: 5px;
-      width: 12px; height: 12px;
-      border-radius: 50%;
-      background: var(--bg-deep);
-      border: 2px solid var(--gold);
-    }
-    .tl-dot::after {
-      content: '';
-      position: absolute; inset: 2px;
-      border-radius: 50%;
-      background: var(--gold);
-    }
-    .tl-date { font-family: var(--font-d); font-size: 0.72rem; letter-spacing: 0.24em; color: var(--gold); margin-bottom: 5px; }
-    .tl-ev { font-family: var(--font-d); font-size: 1.1rem; color: var(--gold-light); margin-bottom: 5px; }
-    .tl-desc { font-size: 0.84rem; color: var(--text-sub); line-height: 1.85; }
+    .tl-dot { position: absolute; left: -28px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg-deep); border: 2px solid var(--gold); }
+    .tl-dot::after { content: ''; position: absolute; inset: 2px; border-radius: 50%; background: var(--gold); }
+    .tl-date { font-family: var(--font-d); font-size: 0.7rem; letter-spacing: 0.22em; color: var(--gold); margin-bottom: 4px; }
+    .tl-ev { font-family: var(--font-d); font-size: 1rem; color: var(--gold-light); margin-bottom: 4px; }
+    .tl-desc { font-size: 0.82rem; color: var(--text-sub); line-height: 1.8; }
 
-    /* ⑦ スライダー */
+    /* ── スライダー ── */
     #memories .sl-wrap { width: 100%; overflow: hidden; border-radius: var(--radius); }
     .sl-track { display: flex; transition: transform 0.5s var(--ease); }
-    .sl-item {
-      min-width: 100%;
-      aspect-ratio: 4/3;
-      background: linear-gradient(135deg, #12122e, #080820);
-      position: relative;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-    }
+    .sl-item { min-width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, #12122e, #080820); position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    /* スライダー内の写真 */
+    .sl-item img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
     .sl-ph { font-size: 3rem; opacity: 0.14; }
-    .sl-cap {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 44px 20px 18px;
-      background: linear-gradient(transparent, rgba(6,6,20,0.92));
-      font-size: 0.84rem;
-      letter-spacing: 0.14em;
-    }
+    .sl-cap { position: absolute; bottom: 0; left: 0; right: 0; padding: 44px 20px 18px; background: linear-gradient(transparent, rgba(6,6,20,0.92)); font-size: 0.84rem; letter-spacing: 0.14em; }
     .sl-ctrl { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 18px; }
-    .sl-btn {
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      border: 1px solid var(--glass-border);
-      background: var(--bg-card);
-      color: var(--gold-light);
-      font-size: 0.9rem;
-      display: flex; align-items: center; justify-content: center;
-      backdrop-filter: blur(10px);
-      transition: background 0.3s, border-color 0.3s;
-    }
+    .sl-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--gold-light); font-size: 0.9rem; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); transition: background 0.3s, border-color 0.3s; }
     .sl-btn:hover { background: rgba(201,169,110,0.18); border-color: var(--gold); }
     .sl-dots { display: flex; gap: 8px; }
-    .sl-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: rgba(201,169,110,0.28);
-      transition: background 0.3s, transform 0.3s;
-      cursor: pointer;
-    }
+    .sl-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(201,169,110,0.28); transition: background 0.3s, transform 0.3s; cursor: pointer; }
     .sl-dot.on { background: var(--gold); transform: scale(1.45); }
 
-    /* ⑧ クイズ */
-    #quiz .qz-card { margin-bottom: 20px; }
-    .qz-q { font-size: 0.93rem; margin-bottom: 14px; line-height: 1.75; }
-    .qz-q .qn { font-family: var(--font-d); font-size: 1.08rem; color: var(--gold); margin-right: 6px; }
-    .qz-opts { display: flex; flex-direction: column; gap: 9px; }
-    .qz-opt {
-      border: 1px solid var(--glass-border);
-      background: var(--bg-card);
-      color: var(--text-main);
-      font-family: var(--font-b);
-      font-size: 0.86rem;
-      padding: 13px 16px;
-      border-radius: 12px;
-      text-align: left;
-      transition: border-color 0.3s, background 0.3s;
-      backdrop-filter: blur(10px);
-      letter-spacing: 0.04em;
-    }
+    /* ── クイズ ── */
+    #quiz .qz-card { margin-bottom: 16px; }
+    .qz-q { font-size: 0.88rem; margin-bottom: 12px; line-height: 1.7; }
+    .qz-q .qn { font-family: var(--font-d); font-size: 1rem; color: var(--gold); margin-right: 6px; }
+    .qz-opts { display: flex; flex-direction: column; gap: 8px; }
+    .qz-opt { border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: var(--font-b); font-size: 0.83rem; padding: 11px 14px; border-radius: 10px; text-align: left; transition: border-color 0.3s, background 0.3s; backdrop-filter: blur(10px); letter-spacing: 0.03em; line-height: 1.6; }
     .qz-opt:hover:not([disabled]) { border-color: var(--gold); background: rgba(201,169,110,0.08); }
     .qz-opt.ok  { border-color: #4caf80; background: rgba(76,175,128,0.1); color: #7de0b0; }
     .qz-opt.ng  { border-color: #d05050; background: rgba(208,80,80,0.1);  color: #f09090; }
-    .qz-ans {
-      margin-top: 10px; display: none;
-      font-size: 0.82rem; color: var(--text-sub);
-      padding: 11px 14px;
-      background: rgba(255,255,255,0.03);
-      border-radius: 10px; line-height: 1.85;
-    }
+    .qz-ans { margin-top: 10px; display: none; font-size: 0.82rem; color: var(--text-sub); padding: 11px 14px; background: rgba(255,255,255,0.03); border-radius: 10px; line-height: 1.85; }
     .qz-ans.show { display: block; }
     #quizScore { text-align: center; padding: 28px; display: none; }
     #quizScore.show { display: block; }
     .score-num { font-family: var(--font-d); font-size: 3.5rem; color: var(--gold); line-height: 1; margin-bottom: 10px; }
     .score-msg { font-size: 0.92rem; color: var(--text-sub); }
 
-    /* ================================================================
-       エンディング
-    ================================================================ */
+    /* ── エンディング ── */
     #ending {
-      min-height: 100svh;
-      text-align: center;
+      min-height: 100svh; text-align: center;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       padding: 60px 24px;
-      position: relative; z-index: 1;
-      overflow: hidden;
+      position: relative; z-index: 1; overflow: hidden;
     }
-    .end-star {
-      font-size: 2rem;
-      letter-spacing: 0.3em;
-      margin-bottom: 32px;
-      opacity: 0.7;
-    }
-    .end-title {
-      font-family: var(--font-d);
-      font-size: clamp(1.3rem, 5vw, 2rem);
-      font-weight: 300;
-      color: var(--gold-light);
-      letter-spacing: 0.1em;
-      line-height: 1.7;
-      margin-bottom: 24px;
-    }
-    .end-names {
-      font-family: var(--font-d);
-      font-size: 1.05rem;
-      color: var(--gold);
-      letter-spacing: 0.22em;
-      margin-bottom: 36px;
-    }
-    .end-date {
-      font-family: var(--font-d);
-      font-size: 0.85rem;
-      letter-spacing: 0.35em;
-      color: var(--text-sub);
-      margin-bottom: 48px;
-    }
+    .end-star { font-size: 2rem; letter-spacing: 0.3em; margin-bottom: 32px; opacity: 0.7; }
+    .end-title { font-family: var(--font-d); font-size: clamp(1.3rem, 5vw, 2rem); font-weight: 300; color: var(--gold-light); letter-spacing: 0.1em; line-height: 1.7; margin-bottom: 24px; }
+    .end-names { font-family: var(--font-d); font-size: 1.05rem; color: var(--gold); letter-spacing: 0.22em; margin-bottom: 36px; }
+    .end-date { font-family: var(--font-d); font-size: 0.85rem; letter-spacing: 0.35em; color: var(--text-sub); margin-bottom: 48px; }
 
-    /* ハートボタン */
-    #heartBtn {
-      border: 1px solid rgba(255,150,180,0.5);
-      background: rgba(255,100,140,0.08);
-      color: #ffb8cc;
-      font-family: var(--font-d);
-      font-size: 1rem;
-      letter-spacing: 0.22em;
-      padding: 16px 44px;
-      border-radius: 60px;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.4s, transform 0.3s, box-shadow 0.4s;
-    }
-    #heartBtn:hover {
-      background: rgba(255,100,140,0.2);
-      transform: translateY(-2px);
-      box-shadow: 0 0 24px rgba(255,120,160,0.3);
-    }
+    #heartBtn { border: 1px solid rgba(255,150,180,0.5); background: rgba(255,100,140,0.08); color: #ffb8cc; font-family: var(--font-d); font-size: 1rem; letter-spacing: 0.22em; padding: 16px 44px; border-radius: 60px; position: relative; overflow: hidden; transition: background 0.4s, transform 0.3s, box-shadow 0.4s; }
+    #heartBtn:hover { background: rgba(255,100,140,0.2); transform: translateY(-2px); box-shadow: 0 0 24px rgba(255,120,160,0.3); }
     #heartBtn:active { transform: scale(0.96); }
 
-    /* ハートパーティクル */
-    .heart-particle {
-      position: fixed;
-      pointer-events: none;
-      font-size: 1.6rem;
-      z-index: 999;
-      animation: heartFly var(--dur) var(--ease) forwards;
-      will-change: transform, opacity;
-    }
-    @keyframes heartFly {
-      0%   { opacity: 1; transform: translate(0, 0) scale(0.5) rotate(var(--rot0)); }
-      60%  { opacity: 1; }
-      100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(var(--sc)) rotate(var(--rot1)); }
-    }
+    .heart-particle { position: fixed; pointer-events: none; font-size: 1.6rem; z-index: 999; animation: heartFly var(--dur) var(--ease) forwards; will-change: transform, opacity; }
+    @keyframes heartFly { 0%{opacity:1;transform:translate(0,0) scale(0.5) rotate(var(--rot0))} 60%{opacity:1} 100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(var(--sc)) rotate(var(--rot1))} }
 
-    /* 「今日はありがとう！」テキスト演出 */
-    #thankMsg {
-      position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%) scale(0.6);
-      z-index: 1000;
-      pointer-events: none;
-      text-align: center;
-      opacity: 0;
-      transition: opacity 0.4s, transform 0.5s var(--ease);
-    }
-    #thankMsg.show {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-    #thankMsg.hide {
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(1.2);
-    }
-    .thank-inner {
-      background: rgba(8,8,24,0.85);
-      border: 1px solid rgba(255,150,180,0.4);
-      border-radius: 24px;
-      padding: 32px 40px;
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      position: relative;
-    }
-    .thank-inner::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,150,180,0.6), transparent);
-    }
-    .thank-hearts-row {
-      font-size: 1.8rem;
-      letter-spacing: 0.2em;
-      margin-bottom: 16px;
-      animation: thankHeartsAnim 1s ease infinite alternate;
-    }
-    @keyframes thankHeartsAnim {
-      from { transform: scale(1); }
-      to   { transform: scale(1.1); }
-    }
-    .thank-text {
-      font-family: var(--font-d);
-      font-size: clamp(1.4rem, 6vw, 2rem);
-      color: #ffb8cc;
-      letter-spacing: 0.12em;
-      line-height: 1.5;
-      text-shadow: 0 0 20px rgba(255,120,160,0.6);
-    }
-    .thank-sub {
-      font-size: 0.8rem;
-      letter-spacing: 0.2em;
-      color: rgba(255,180,200,0.7);
-      margin-top: 10px;
-    }
+    #thankMsg { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.6); z-index: 1000; pointer-events: none; text-align: center; opacity: 0; transition: opacity 0.4s, transform 0.5s var(--ease); }
+    #thankMsg.show { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    #thankMsg.hide { opacity: 0; transform: translate(-50%,-50%) scale(1.2); }
+    .thank-inner { background: rgba(8,8,24,0.85); border: 1px solid rgba(255,150,180,0.4); border-radius: 24px; padding: 32px 40px; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); position: relative; }
+    .thank-inner::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,150,180,0.6), transparent); }
+    .thank-hearts-row { font-size: 1.8rem; letter-spacing: 0.2em; margin-bottom: 16px; animation: thankHeartsAnim 1s ease infinite alternate; }
+    @keyframes thankHeartsAnim { from{transform:scale(1)} to{transform:scale(1.1)} }
+    .thank-text { font-family: var(--font-d); font-size: clamp(1.4rem, 6vw, 2rem); color: #ffb8cc; letter-spacing: 0.12em; line-height: 1.5; text-shadow: 0 0 20px rgba(255,120,160,0.6); }
+    .thank-sub { font-size: 0.8rem; letter-spacing: 0.2em; color: rgba(255,180,200,0.7); margin-top: 10px; }
 
-    /* スクロールトップボタン */
-    #toTop {
-      position: fixed;
-      bottom: 26px; right: 18px;
-      z-index: 50;
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      border: 1px solid var(--glass-border);
-      background: rgba(8,8,24,0.82);
-      color: var(--gold-light);
-      font-size: 1rem;
-      display: flex; align-items: center; justify-content: center;
-      backdrop-filter: blur(14px);
-      opacity: 0; visibility: hidden;
-      transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
-      transform: translateY(8px);
-    }
+    #toTop { position: fixed; bottom: 26px; right: 18px; z-index: 50; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--glass-border); background: rgba(8,8,24,0.82); color: var(--gold-light); font-size: 1rem; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(14px); opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s, transform 0.3s; transform: translateY(8px); }
     #toTop.show { opacity: 1; visibility: visible; transform: translateY(0); }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
   </style>
 </head>
@@ -687,23 +335,18 @@
 
 <canvas id="starCanvas"></canvas>
 
-<!-- ローディング -->
 <div id="loading">
   <div class="ld-ring"></div>
   <p class="ld-text">Now Loading ...</p>
 </div>
 
-<!-- ナビゲーション -->
 <nav id="nav">
   <div class="nav-logo">理央 <span>×</span> 利帆</div>
   <button id="menuBtn" aria-label="メニューを開く">
-    <span class="hb"></span>
-    <span class="hb"></span>
-    <span class="hb"></span>
+    <span class="hb"></span><span class="hb"></span><span class="hb"></span>
   </button>
 </nav>
 
-<!-- ドロワーメニュー -->
 <div id="drawer" role="dialog" aria-modal="true" aria-label="ナビゲーションメニュー">
   <button id="drawerClose" aria-label="メニューを閉じる">✕</button>
   <a class="d-link" href="#greeting">  <span class="di">✉</span>  ご挨拶</a>
@@ -716,22 +359,16 @@
   <a class="d-link" href="#ending">    <span class="di">🌙</span> エンディング</a>
 </div>
 
-<!-- メインコンテンツ -->
 <div id="main">
 
   <!-- ① オープニング -->
   <section id="hero">
     <div class="hero-glow"></div>
     <p class="hero-date">2026 . 07 . 19</p>
-    <h1 class="hero-names">
-      四辻理央<span class="x">×</span>片岡利帆
-    </h1>
+    <h1 class="hero-names">四辻理央<span class="x">×</span>片岡利帆</h1>
     <p class="hero-sub">顔合わせ会ページへようこそ！</p>
     <button id="startBtn">はじめる</button>
-    <div class="scroll-hint">
-      <div class="s-dot"></div>
-      SCROLL
-    </div>
+    <div class="scroll-hint"><div class="s-dot"></div>SCROLL</div>
   </section>
 
   <!-- ② ご挨拶 -->
@@ -761,17 +398,13 @@
       <h2 class="sec-title">ふたりの<em>プロフィール</em></h2>
       <div class="p-grid">
 
-        <!-- 新郎カード ★写真: .p-photo内に <img src="./img/rio.jpg" alt="四辻理央"> を追加 -->
         <div class="g-card p-card fu">
           <div class="p-photo">
             <img src="./rio.jpeg" alt="四辻理央">
           </div>
           <div class="p-info">
             <p class="p-role">Groom / 新郎</p>
-            <h3 class="p-name">
-              四辻 理央
-              <small>よつじ りお</small>
-            </h3>
+            <h3 class="p-name">四辻 理央<small>よつじ りお</small></h3>
             <div class="p-rows">
               <div class="p-row"><span class="p-lbl">年齢</span><span>27歳</span></div>
               <div class="p-row"><span class="p-lbl">趣味</span><span>サッカー・アニメ・サウナ</span></div>
@@ -783,17 +416,13 @@
           </div>
         </div>
 
-        <!-- 新婦カード ★写真: .p-photo内に <img src="./img/riho.jpg" alt="片岡利帆"> を追加 -->
         <div class="g-card p-card fu">
           <div class="p-photo">
             <img src="./riho.jpg" alt="片岡利帆">
           </div>
           <div class="p-info">
             <p class="p-role">Bride / 新婦</p>
-            <h3 class="p-name">
-              片岡 利帆
-              <small>かたおか りほ</small>
-            </h3>
+            <h3 class="p-name">片岡 利帆<small>かたおか りほ</small></h3>
             <div class="p-rows">
               <div class="p-row"><span class="p-lbl">年齢</span><span>27歳</span></div>
               <div class="p-row"><span class="p-lbl">趣味</span><span>ゲーム・歌うこと・旅行の計画を立てること</span></div>
@@ -814,44 +443,24 @@
     <div class="inner">
       <p class="eyebrow">Our Work</p>
       <h2 class="sec-title">ふたりの<em>お仕事</em></h2>
-
       <div class="g-card w-card fu">
         <div class="w-head">
           <div class="w-icon">💻</div>
-          <div>
-            <p class="w-role">Groom's Work</p>
-            <p class="w-who">理央のお仕事</p>
-          </div>
+          <div><p class="w-role">Groom's Work</p><p class="w-who">理央のお仕事</p></div>
         </div>
         <div class="w-rows">
-          <div class="w-row">
-            <span class="w-lbl">仕事内容</span>
-            <span>PwCコンサルティング合同会社で、人事領域✖︎IT系のコンサルタントという名前だけ聞くと一見怪しい仕事をしています。今までは、人事システムの導入支援を行ったり、PMOとして現場をまとめていたりしていました。今は、タレントマネジメントシステムの導入支援をしています。（人材スキルの可視化等）</span>
-          </div>
-          <div class="w-row">
-            <span class="w-lbl">想い</span>
-            <span>「どんな仕事も楽しむ」をモットーに日々の業務に励んでいます。将来こうなりたいとかはまだないですが、自分が楽しむことで周りも自然と楽しめる職場が作れたらなと思っています。</span>
-          </div>
+          <div class="w-row"><span class="w-lbl">仕事内容</span><span>PwCコンサルティング合同会社で、人事領域✖︎IT系のコンサルタントという名前だけ聞くと一見怪しい仕事をしています。今までは、人事システムの導入支援を行ったり、PMOとして現場をまとめていたりしていました。今は、タレントマネジメントシステムの導入支援をしています。（人材スキルの可視化等）</span></div>
+          <div class="w-row"><span class="w-lbl">想い</span><span>「どんな仕事も楽しむ」をモットーに日々の業務に励んでいます。将来こうなりたいとかはまだないですが、自分が楽しむことで周りも自然と楽しめる職場が作れたらなと思っています。</span></div>
         </div>
       </div>
-
       <div class="g-card w-card fu">
         <div class="w-head">
           <div class="w-icon">🌿</div>
-          <div>
-            <p class="w-role">Bride's Work</p>
-            <p class="w-who">利帆のお仕事</p>
-          </div>
+          <div><p class="w-role">Bride's Work</p><p class="w-who">利帆のお仕事</p></div>
         </div>
         <div class="w-rows">
-          <div class="w-row">
-            <span class="w-lbl">仕事内容</span>
-            <span>Googleで広告営業。検索結果の広告・youtube広告・Google Mapsの広告への出稿金額をもっと上げて欲しいと広告主に提案しています。今後は製品側（Youtube・Gemini・Pixelなど）に携われる部署に移動したいなと今は思ってます！以前は、理央くんの会社の協業相手であるSAPというシステムの開発・販売会社で営業をしていました。</span>
-          </div>
-          <div class="w-row">
-            <span class="w-lbl">想い</span>
-            <span>会社愛が会社Top3に入るくらい強い自信があります。また、Googleは朝から晩までブッフェのレストランが無料なのですが、外部開放されているため、東京に来る際はぜひいらしてください。</span>
-          </div>
+          <div class="w-row"><span class="w-lbl">仕事内容</span><span>Googleで広告営業。検索結果の広告・youtube広告・Google Mapsの広告への出稿金額をもっと上げて欲しいと広告主に提案しています。今後は製品側（Youtube・Gemini・Pixelなど）に携われる部署に移動したいなと今は思ってます！以前は、理央くんの会社の協業相手であるSAPというシステムの開発・販売会社で営業をしていました。</span></div>
+          <div class="w-row"><span class="w-lbl">想い</span><span>会社愛が会社Top3に入るくらい強い自信があります。また、Googleは朝から晩までブッフェのレストランが無料なのですが、外部開放されているため、東京に来る際はぜひいらしてください。</span></div>
         </div>
       </div>
     </div>
@@ -862,7 +471,6 @@
     <div class="inner">
       <p class="eyebrow">What I Love</p>
       <h2 class="sec-title">お互いの<em>好きなところ</em></h2>
-
       <div class="love-blk fu">
         <p class="love-from">理央から見た利帆</p>
         <ul class="love-list">
@@ -873,9 +481,7 @@
           <li><span class="ln">5</span>お仕事頑張っているところ（尊敬）</li>
         </ul>
       </div>
-
       <div class="div-line"></div>
-
       <div class="love-blk fu">
         <p class="love-from">利帆から見た理央</p>
         <ul class="love-list">
@@ -894,44 +500,13 @@
     <div class="inner">
       <p class="eyebrow">Our Story</p>
       <h2 class="sec-title">ふたりの<em>歩み</em></h2>
-
       <div class="tl-wrap fu">
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <p class="tl-date">2024年 6月</p>
-          <p class="tl-ev">出会い ✦</p>
-          <p class="tl-desc">理央の会社の同期と3人でご飯に行ったのが初めてです。階段下のよくわからない外の席に座った覚えがあるのと、利帆が瓜類が嫌いと言って、色々残していたのも覚えています。</p>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <p class="tl-date">2024年 7月</p>
-          <p class="tl-ev">初デート</p>
-          <p class="tl-desc">利帆が美味しいご飯が好きなので、理央があまり行かない中目黒でご飯を食べました。（理央仕事で遅刻）</p>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <p class="tl-date">2025年 3月</p>
-          <p class="tl-ev">交際スタート</p>
-          <p class="tl-desc">理央から告白し交際スタート。利帆は告白された日のことが記憶にないという...</p>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <p class="tl-date">2025年 3月</p>
-          <p class="tl-ev">ふたりで旅行 ✈️</p>
-          <p class="tl-desc">付き合った月に箱根旅行へ！ひたすら美味しいご飯と美味しいお酒を。</p>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <p class="tl-date">2026年 4月</p>
-          <p class="tl-ev">プロポーズ 💍</p>
-          <p class="tl-desc">ハワイの海辺でプロポーズ。プロポーズ直前に理央はクレカを紛失。</p>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <p class="tl-date">2026年 7月</p>
-          <p class="tl-ev">婚約・顔合わせ 🌸</p>
-          <p class="tl-desc">両家にご報告し、本日の顔合わせを迎えることができました。これからどうぞよろしくお願いいたします。</p>
-        </div>
+        <div class="tl-item"><div class="tl-dot"></div><p class="tl-date">2024年 6月</p><p class="tl-ev">出会い ✦</p><p class="tl-desc">理央の会社の同期と3人でご飯に行ったのが初めてです。階段下のよくわからない外の席に座った覚えがあるのと、利帆が瓜類が嫌いと言って、色々残していたのも覚えています。</p></div>
+        <div class="tl-item"><div class="tl-dot"></div><p class="tl-date">2024年 7月</p><p class="tl-ev">初デート</p><p class="tl-desc">利帆が美味しいご飯が好きなので、理央があまり行かない中目黒でご飯を食べました。（理央仕事で遅刻）</p></div>
+        <div class="tl-item"><div class="tl-dot"></div><p class="tl-date">2025年 3月</p><p class="tl-ev">交際スタート</p><p class="tl-desc">理央から告白し交際スタート。利帆は告白された日のことが記憶にないという...</p></div>
+        <div class="tl-item"><div class="tl-dot"></div><p class="tl-date">2025年 3月</p><p class="tl-ev">ふたりで旅行 ✈️</p><p class="tl-desc">付き合った月に箱根旅行へ！ひたすら美味しいご飯と美味しいお酒を。</p></div>
+        <div class="tl-item"><div class="tl-dot"></div><p class="tl-date">2026年 4月</p><p class="tl-ev">プロポーズ 💍</p><p class="tl-desc">ハワイの海辺でプロポーズ。プロポーズ直前に理央はクレカを紛失。</p></div>
+        <div class="tl-item"><div class="tl-dot"></div><p class="tl-date">2026年 7月</p><p class="tl-ev">婚約・顔合わせ 🌸</p><p class="tl-desc">両家にご報告し、本日の顔合わせを迎えることができました。これからどうぞよろしくお願いいたします。</p></div>
       </div>
     </div>
   </section>
@@ -941,11 +516,6 @@
     <div class="inner">
       <p class="eyebrow">Memories</p>
       <h2 class="sec-title">ふたりの<em>思い出</em></h2>
-      <!--
-        ★ 写真差し替え方法:
-          各 .sl-item 内に <img src="./img/memory1.jpg" alt="説明"> を追加し、
-          .sl-ph（プレースホルダー）を削除してください
-      -->
       <div class="sl-wrap" id="memSlider">
         <div class="sl-track" id="memTrack">
           <div class="sl-item">
@@ -961,7 +531,7 @@
             <div class="sl-cap">🎂 記念日ご飯</div>
           </div>
           <div class="sl-item">
-          <img src="./trip5.jpg" alt="旅行2">
+            <img src="./trip5.jpg" alt="旅行2">
             <div class="sl-cap">🇹🇼 台湾旅行</div>
           </div>
           <div class="sl-item">
@@ -983,7 +553,7 @@
     <div class="inner">
       <p class="eyebrow">Quiz Time</p>
       <h2 class="sec-title">ふたりに関する<em>クイズ</em></h2>
-      <p style="font-size:0.82rem;color:var(--text-sub);margin-bottom:30px;text-align:center;">全7問 — どれだけ知ってるかな？</p>
+      <p style="font-size:0.82rem;color:var(--text-sub);margin-bottom:24px;text-align:center;">全7問 — どれだけ知ってるかな？</p>
 
       <div class="g-card qz-card fu">
         <p class="qz-q"><span class="qn">Q1.</span>新婚旅行予定先は？</p>
@@ -1001,7 +571,7 @@
         <div class="qz-opts" data-ans="1">
           <button class="qz-opt" data-i="0">2LDK</button>
           <button class="qz-opt" data-i="1">3LDK</button>
-          <button class="qz-opt" data-i="2">"2SLDK"</button>
+          <button class="qz-opt" data-i="2">2SLDK</button>
           <button class="qz-opt" data-i="3">4LDK</button>
         </div>
         <div class="qz-ans">✅ 3LDK！2028年2月に入居予定！（遅れる可能性あり...）</div>
@@ -1064,29 +634,23 @@
 
       <div class="g-card" id="quizScore">
         <p style="font-size:0.78rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:12px;font-family:var(--font-d);">RESULT</p>
-        <div class="score-num" id="scoreNum">0 / 8</div>
+        <div class="score-num" id="scoreNum">0 / 7</div>
         <p class="score-msg" id="scoreMsg">クイズに答えてね！</p>
       </div>
     </div>
   </section>
 
-  <!-- ⑩ エンディング -->
+  <!-- エンディング -->
   <section id="ending">
     <div class="end-star">🌙 ✦ ⭐</div>
-    <h2 class="end-title">
-      本日はお越しいただき<br />
-      誠にありがとうございます
-    </h2>
+    <h2 class="end-title">本日はお越しいただき<br />誠にありがとうございます</h2>
     <p class="end-names">四辻 理央 ＆ 片岡 利帆</p>
     <p class="end-date">2026 . 07 . 19</p>
-
-    <!-- ハートボタン -->
     <button id="heartBtn">💗 押してみて</button>
   </section>
 
-</div><!-- /main -->
+</div>
 
-<!-- 「今日はありがとう！」テキスト演出 -->
 <div id="thankMsg">
   <div class="thank-inner">
     <div class="thank-hearts-row">💗 💕 💗</div>
@@ -1098,240 +662,87 @@
 <button id="toTop" aria-label="ページトップへ">↑</button>
 
 <script>
-/* ================================================================
-   1. 星パーティクル Canvas
-================================================================ */
 (function(){
-  const c = document.getElementById('starCanvas');
-  const ctx = c.getContext('2d');
-  let stars = [], W, H;
-
-  function resize(){
-    W = c.width  = window.innerWidth;
-    H = c.height = window.innerHeight;
-  }
-  function init(n){
-    stars = [];
-    for(let i=0;i<n;i++){
-      stars.push({
-        x: Math.random()*W, y: Math.random()*H,
-        r: Math.random()*1.15+0.2,
-        sp: Math.random()*0.0025+0.0008,
-        ph: Math.random()*Math.PI*2
-      });
-    }
-  }
-  function draw(t){
-    ctx.clearRect(0,0,W,H);
-    stars.forEach(s=>{
-      const a = 0.28+0.72*(Math.sin(t*s.sp+s.ph)*0.5+0.5);
-      ctx.beginPath();
-      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(255,255,240,${a})`;
-      ctx.fill();
-    });
-    requestAnimationFrame(draw);
-  }
-  window.addEventListener('resize',()=>{ resize(); init(220); });
-  resize(); init(220);
-  requestAnimationFrame(draw);
+  const c=document.getElementById('starCanvas'),ctx=c.getContext('2d');
+  let stars=[],W,H;
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
+  function init(n){stars=[];for(let i=0;i<n;i++){stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.15+0.2,sp:Math.random()*0.0025+0.0008,ph:Math.random()*Math.PI*2});}}
+  function draw(t){ctx.clearRect(0,0,W,H);stars.forEach(s=>{const a=0.28+0.72*(Math.sin(t*s.sp+s.ph)*0.5+0.5);ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,240,${a})`;ctx.fill();});requestAnimationFrame(draw);}
+  window.addEventListener('resize',()=>{resize();init(220);});
+  resize();init(220);requestAnimationFrame(draw);
 })();
 
-/* ================================================================
-   2. ローディング
-================================================================ */
 window.addEventListener('load',()=>{
-  setTimeout(()=>{
-    document.getElementById('loading').classList.add('hide');
-    document.getElementById('main').classList.add('show');
-  }, 1600);
+  setTimeout(()=>{document.getElementById('loading').classList.add('hide');document.getElementById('main').classList.add('show');},1600);
 });
 
-/* ================================================================
-   3. 開始ボタン
-================================================================ */
-document.getElementById('startBtn').addEventListener('click',()=>{
-  document.getElementById('greeting').scrollIntoView({behavior:'smooth'});
-});
+document.getElementById('startBtn').addEventListener('click',()=>{document.getElementById('greeting').scrollIntoView({behavior:'smooth'});});
 
-/* ================================================================
-   4. ナビゲーション
-================================================================ */
-let lastY = 0;
-const nav = document.getElementById('nav');
-window.addEventListener('scroll',()=>{
-  const y = window.scrollY;
-  nav.classList.toggle('hidden', y > lastY && y > 80);
-  lastY = y;
-  document.getElementById('toTop').classList.toggle('show', y > 500);
-},{passive:true});
-document.getElementById('toTop').addEventListener('click',()=>{
-  window.scrollTo({top:0,behavior:'smooth'});
-});
+let lastY=0;
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{const y=window.scrollY;nav.classList.toggle('hidden',y>lastY&&y>80);lastY=y;document.getElementById('toTop').classList.toggle('show',y>500);},{passive:true});
+document.getElementById('toTop').addEventListener('click',()=>{window.scrollTo({top:0,behavior:'smooth'});});
 
-/* ================================================================
-   5. ハンバーガーメニュー
-================================================================ */
-const menuBtn = document.getElementById('menuBtn');
-const drawer  = document.getElementById('drawer');
-function openDrawer(){ drawer.classList.add('open'); document.body.style.overflow='hidden'; }
-function closeDrawer(){ drawer.classList.remove('open'); document.body.style.overflow=''; }
-menuBtn.addEventListener('click', openDrawer);
-document.getElementById('drawerClose').addEventListener('click', closeDrawer);
-drawer.querySelectorAll('.d-link').forEach(a=>a.addEventListener('click', closeDrawer));
-drawer.addEventListener('click', e=>{ if(e.target===drawer) closeDrawer(); });
+const menuBtn=document.getElementById('menuBtn'),drawer=document.getElementById('drawer');
+function openDrawer(){drawer.classList.add('open');document.body.style.overflow='hidden';}
+function closeDrawer(){drawer.classList.remove('open');document.body.style.overflow='';}
+menuBtn.addEventListener('click',openDrawer);
+document.getElementById('drawerClose').addEventListener('click',closeDrawer);
+drawer.querySelectorAll('.d-link').forEach(a=>a.addEventListener('click',closeDrawer));
+drawer.addEventListener('click',e=>{if(e.target===drawer)closeDrawer();});
 
-/* ================================================================
-   6. スクロールアニメーション
-================================================================ */
-const io = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-  });
-},{threshold:0.13});
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.13});
 document.querySelectorAll('.fu').forEach(el=>io.observe(el));
 
-/* ================================================================
-   7. スライダー
-================================================================ */
-function makeSlider(trackId, prevId, nextId, dotsId){
-  const track = document.getElementById(trackId);
-  const prev  = document.getElementById(prevId);
-  const next  = document.getElementById(nextId);
-  const dots  = document.getElementById(dotsId);
-  if(!track) return;
-  const n = track.children.length;
-  let cur = 0;
-  for(let i=0;i<n;i++){
-    const d = document.createElement('div');
-    d.className = 'sl-dot'+(i===0?' on':'');
-    d.addEventListener('click',()=>go(i));
-    dots.appendChild(d);
-  }
-  function go(idx){
-    cur = (idx+n)%n;
-    track.style.transform = `translateX(-${cur*100}%)`;
-    dots.querySelectorAll('.sl-dot').forEach((d,i)=>d.classList.toggle('on',i===cur));
-  }
-  prev.addEventListener('click',()=>go(cur-1));
-  next.addEventListener('click',()=>go(cur+1));
+function makeSlider(trackId,prevId,nextId,dotsId){
+  const track=document.getElementById(trackId),prev=document.getElementById(prevId),next=document.getElementById(nextId),dots=document.getElementById(dotsId);
+  if(!track)return;
+  const n=track.children.length;let cur=0;
+  for(let i=0;i<n;i++){const d=document.createElement('div');d.className='sl-dot'+(i===0?' on':'');d.addEventListener('click',()=>go(i));dots.appendChild(d);}
+  function go(idx){cur=(idx+n)%n;track.style.transform=`translateX(-${cur*100}%)`;dots.querySelectorAll('.sl-dot').forEach((d,i)=>d.classList.toggle('on',i===cur));}
+  prev.addEventListener('click',()=>go(cur-1));next.addEventListener('click',()=>go(cur+1));
   let sx=0;
   track.parentElement.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{passive:true});
-  track.parentElement.addEventListener('touchend',e=>{
-    const dx=e.changedTouches[0].clientX-sx;
-    if(Math.abs(dx)>38) go(cur+(dx<0?1:-1));
-  });
+  track.parentElement.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>38)go(cur+(dx<0?1:-1));});
 }
 makeSlider('memTrack','memPrev','memNext','memDots');
 
-/* ================================================================
-   8. クイズ
-================================================================ */
-let answered=0, score=0;
-const totalQ=8;
+let answered=0,score=0;
+const totalQ=7;
 document.querySelectorAll('.qz-card').forEach(card=>{
-  const opts    = card.querySelectorAll('.qz-opt');
-  const ansEl   = card.querySelector('.qz-ans');
-  const correct = parseInt(card.querySelector('.qz-opts').dataset.ans,10);
+  const opts=card.querySelectorAll('.qz-opt'),ansEl=card.querySelector('.qz-ans'),correct=parseInt(card.querySelector('.qz-opts').dataset.ans,10);
   let done=false;
-  opts.forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      if(done) return;
-      done=true; answered++;
-      const idx=parseInt(btn.dataset.i,10);
-      const isOk=idx===correct;
-      if(isOk) score++;
-      btn.classList.add(isOk?'ok':'ng');
-      if(!isOk) opts[correct].classList.add('ok');
-      opts.forEach(b=>{ b.disabled=true; });
-      ansEl.classList.add('show');
-      if(answered===totalQ){
-        const scoreBox=document.getElementById('quizScore');
-        document.getElementById('scoreNum').textContent=`${score} / ${totalQ}`;
-        const msgs=[
-          [8,'🏆 完璧！ふたりのことを完全に理解してくれていますね！'],
-          [6,'🌟 すばらしい！よく知っていてくれています！'],
-          [4,'💛 なかなか！これからもっと仲良くなりましょう！'],
-          [0,'🌸 これからもっとふたりのことを知ってもらえたら嬉しいです！'],
-        ];
-        document.getElementById('scoreMsg').textContent=msgs.find(([t])=>score>=t)[1];
-        scoreBox.classList.add('show');
-        scoreBox.scrollIntoView({behavior:'smooth',block:'center'});
-      }
-    });
-  });
+  opts.forEach(btn=>{btn.addEventListener('click',()=>{
+    if(done)return;done=true;answered++;
+    const idx=parseInt(btn.dataset.i,10),isOk=idx===correct;
+    if(isOk)score++;
+    btn.classList.add(isOk?'ok':'ng');
+    if(!isOk)opts[correct].classList.add('ok');
+    opts.forEach(b=>{b.disabled=true;});
+    ansEl.classList.add('show');
+    if(answered===totalQ){
+      const scoreBox=document.getElementById('quizScore');
+      document.getElementById('scoreNum').textContent=`${score} / ${totalQ}`;
+      const msgs=[[7,'🏆 完璧！ふたりのことを完全に理解してくれていますね！'],[5,'🌟 すばらしい！よく知っていてくれています！'],[3,'💛 なかなか！これからもっと仲良くなりましょう！'],[0,'🌸 これからもっとふたりのことを知ってもらえたら嬉しいです！']];
+      document.getElementById('scoreMsg').textContent=msgs.find(([t])=>score>=t)[1];
+      scoreBox.classList.add('show');
+      scoreBox.scrollIntoView({behavior:'smooth',block:'center'});
+    }
+  });});
 });
 
-/* ================================================================
-   9. ハートボタン演出
-   ボタンを押すと：
-   - ハートパーティクルが画面に降り注ぐ
-   - 「今日はありがとう！」のメッセージが中央に表示
-================================================================ */
-document.getElementById('heartBtn').addEventListener('click', function(){
-  launchHearts();
-  showThankMessage();
-});
+document.getElementById('heartBtn').addEventListener('click',function(){launchHearts();showThankMessage();});
 
-/* ハートを大量に飛ばす */
 function launchHearts(){
-  const emojis = ['💗','💕','💖','💓','🩷','✨','💝','💞'];
-  const count  = 60;
-
-  for(let i=0; i<count; i++){
-    setTimeout(()=>{
-      const el = document.createElement('div');
-      el.className = 'heart-particle';
-
-      // ランダムなハート絵文字
-      el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-
-      // 発生位置：画面下部〜中央あたり
-      const startX = 10 + Math.random() * 80; // vw
-      const startY = 60 + Math.random() * 35; // vh
-
-      // 飛ぶ方向：上方向に広がる
-      const tx = (Math.random()-0.5) * 300 + 'px';
-      const ty = -(120 + Math.random()*260) + 'px';
-      const sc = 0.4 + Math.random()*1.2;
-      const rot0 = (Math.random()-0.5)*30 + 'deg';
-      const rot1 = (Math.random()-0.5)*120 + 'deg';
-      const dur  = 0.9 + Math.random()*1.0 + 's';
-      const size = 1.0 + Math.random()*1.4;
-
-      el.style.cssText = `
-        left: ${startX}vw;
-        top: ${startY}vh;
-        font-size: ${size}rem;
-        --tx: ${tx};
-        --ty: ${ty};
-        --sc: ${sc};
-        --rot0: ${rot0};
-        --rot1: ${rot1};
-        --dur: ${dur};
-      `;
-
-      document.body.appendChild(el);
-      el.addEventListener('animationend', ()=> el.remove());
-    }, i * 28);
-  }
+  const emojis=['💗','💕','💖','💓','🩷','✨','💝','💞'];
+  for(let i=0;i<60;i++){setTimeout(()=>{const el=document.createElement('div');el.className='heart-particle';el.textContent=emojis[Math.floor(Math.random()*emojis.length)];const startX=10+Math.random()*80,startY=60+Math.random()*35,tx=(Math.random()-0.5)*300+'px',ty=-(120+Math.random()*260)+'px',sc=0.4+Math.random()*1.2,rot0=(Math.random()-0.5)*30+'deg',rot1=(Math.random()-0.5)*120+'deg',dur=0.9+Math.random()*1.0+'s',size=1.0+Math.random()*1.4;el.style.cssText=`left:${startX}vw;top:${startY}vh;font-size:${size}rem;--tx:${tx};--ty:${ty};--sc:${sc};--rot0:${rot0};--rot1:${rot1};--dur:${dur};`;document.body.appendChild(el);el.addEventListener('animationend',()=>el.remove());},i*28);}
 }
 
-/* 「今日はありがとう！」メッセージを表示 */
 function showThankMessage(){
-  const msg = document.getElementById('thankMsg');
-  msg.classList.remove('hide');
-  msg.classList.add('show');
-
-  // 2.8秒後にフェードアウト
-  setTimeout(()=>{
-    msg.classList.remove('show');
-    msg.classList.add('hide');
-    // アニメーション終了後にhideクラスをリセット
-    setTimeout(()=> msg.classList.remove('hide'), 500);
-  }, 2800);
+  const msg=document.getElementById('thankMsg');
+  msg.classList.remove('hide');msg.classList.add('show');
+  setTimeout(()=>{msg.classList.remove('show');msg.classList.add('hide');setTimeout(()=>msg.classList.remove('hide'),500);},2800);
 }
-
 </script>
 </body>
 </html>
